@@ -13,8 +13,8 @@ public class TestController {
     private InstitutionRepository institutionRepository;
     @GetMapping("/")
     public String test(Model model){
-        Iterable<Institution> institutions = institutionRepository.findAll();
-        model.addAttribute("institutions", institutions);
+//        Iterable<Institution> institutions = institutionRepository.findAll();
+//        model.addAttribute("institutions", institutions);
         return "index";
     }
 }
