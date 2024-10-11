@@ -13,7 +13,9 @@ import java.sql.Time;
 @Entity
 public class Institution {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "institution_generator")
+    @SequenceGenerator(name="institution_generator", sequenceName = "institution_id_seq", allocationSize=1)
     @Column(name = "id")
     private long id;
     @Column(name = "title")
@@ -22,6 +24,8 @@ public class Institution {
     private String description;
     @Column(name = "number_of_stars")
     private double numberOfStars;
-    @Column(name = "operating_time")
-    private Time operatingTime;
+    @Column(name = "time_open")
+    private Time timeOpen;
+    @Column(name = "time_close")
+    private Time timeClose;
 }

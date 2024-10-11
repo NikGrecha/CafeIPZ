@@ -5,16 +5,24 @@ import com.master_diploma.cafe.repositories.InstitutionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping(path = "/api")
 public class TestController {
     @Autowired
     private InstitutionRepository institutionRepository;
-    @GetMapping("/")
-    public String test(Model model){
-//        Iterable<Institution> institutions = institutionRepository.findAll();
-//        model.addAttribute("institutions", institutions);
-        return "index";
+
+    @GetMapping("/institutions")
+    public Iterable<Institution> test(Model model){
+        //        model.addAttribute("institutions", institutions);
+        return institutionRepository.findAll();
     }
+
+    @RequestMapping(value = "/institutions/save", method = RequestMethod.POST)
+    public String insertInstitution(@RequestBody Institution institution) {
+        institutionRepository.save(institution);
+        return "Saved";
+    }
+
 }
