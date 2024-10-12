@@ -11,11 +11,16 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Privilege {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "privilege_generator")
+    @SequenceGenerator(name="privilege_generator", sequenceName = "privilege_id_seq", allocationSize=1)
     @Column(name = "id")
     private long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "role_id")
-    private long roleId;
+//    @Column(name = "role_id")
+//    private long roleId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    private Role role;
 }

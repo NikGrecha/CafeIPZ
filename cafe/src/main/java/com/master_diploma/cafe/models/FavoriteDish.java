@@ -11,11 +11,19 @@ import lombok.NoArgsConstructor;
 @Entity
 public class FavoriteDish {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "favorite_dish_generator")
+    @SequenceGenerator(name="favorite_dish_generator", sequenceName = "favorite_dish_id_seq", allocationSize=1)
     @Column(name = "id")
     private long id;
-    @Column(name = "user_client_id")
-    private long userClientId;
-    @Column(name = "dish_id")
-    private long dishId;
+//    @Column(name = "user_client_id")
+//    private long userClientId;
+//    @Column(name = "dish_id")
+//    private long dishId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_client_id", referencedColumnName = "id", nullable = false)
+    private UserTable user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dish_id", referencedColumnName = "id", nullable = false)
+    private Dish dish;
 }

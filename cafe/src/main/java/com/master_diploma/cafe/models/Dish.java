@@ -7,13 +7,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.transaction.reactive.GenericReactiveTransaction;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Dish {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dish_generator")
+    @SequenceGenerator(name="dish_generator", sequenceName = "dish_id_seq", allocationSize=1)
     @Column(name = "id")
     private long id;
     @Column(name = "title")
@@ -24,6 +28,21 @@ public class Dish {
     private String descriptions;
     @Column(name = "recipe")
     private String recipe;
-    @Column(name = "institution_id")
-    private long institutionId;
+//    @Column(name = "institution_id")
+//    private long institutionId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "institution_id", referencedColumnName = "id", nullable = false)
+    private Institution institution;
+    @OneToMany(mappedBy = "dish")
+    private Set<DishOrder> dishOrders;
+    @OneToMany(mappedBy = "dish")
+    private Set<FavoriteDish> favoriteDishes;
+    @ManyToMany
+    @JoinTable(
+            name = "dish_tag", // Name of the existing join table
+            joinColumns = @JoinColumn(name = "dish_id"), // Join column referencing 'Student'
+            inverseJoinColumns = @JoinColumn(name = "tag_id") // Join column referencing 'Course'
+    )
+    private Set<Tag> tags = new HashSet<>();
 }

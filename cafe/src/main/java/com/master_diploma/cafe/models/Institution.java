@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Time;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -28,4 +30,15 @@ public class Institution {
     private Time timeOpen;
     @Column(name = "time_close")
     private Time timeClose;
+
+    @OneToMany(mappedBy = "institution")
+    private Set<Review> reviews;
+    @ManyToMany(mappedBy = "institutions")
+    private Set<UserTable> employees = new HashSet<>();
+    @OneToMany(mappedBy = "institution")
+    private Set<Desk> desks;
+    @OneToMany(mappedBy = "institution")
+    private Set<Award> awards;
+    @OneToMany(mappedBy = "institution")
+    private Set<Dish> dishes;
 }

@@ -14,13 +14,21 @@ import java.util.Date;
 @Entity
 public class Reserve {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reserve_generator")
+    @SequenceGenerator(name="reserve_generator", sequenceName = "reserve_id_seq", allocationSize=1)
     @Column(name = "id")
     private long id;
     @Column(name = "date_od_creation")
     private Date dateOfCreation;
-    @Column(name = "desk_id")
-    private long deskId;
-    @Column(name = "user_client_id")
-    private long userClientId;
+//    @Column(name = "desk_id")
+//    private long deskId;
+//    @Column(name = "user_client_id")
+//    private long userClientId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "desk_id", referencedColumnName = "id", nullable = false)
+    private Desk desk;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_client_id", referencedColumnName = "id", nullable = false)
+    private UserTable user;
 }
