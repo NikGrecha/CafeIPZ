@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -19,9 +20,8 @@ public class Role {
     private long id;
     @Column(name = "name")
     private String name;
-
-    @OneToMany(mappedBy = "role")
-    private Set<UserTable> users;
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<UserTable> users = new HashSet<>();
     @OneToMany(mappedBy = "role")
     private Set<Privilege> privileges;
 }

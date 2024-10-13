@@ -18,7 +18,7 @@ public class Reserve {
     @SequenceGenerator(name="reserve_generator", sequenceName = "reserve_id_seq", allocationSize=1)
     @Column(name = "id")
     private long id;
-    @Column(name = "date_od_creation")
+    @Column(name = "date_of_creation")
     private Date dateOfCreation;
 //    @Column(name = "desk_id")
 //    private long deskId;

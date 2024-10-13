@@ -1,18 +1,19 @@
 package com.master_diploma.cafe.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
+import org.hibernate.annotations.Comment;
+import org.springframework.web.service.annotation.GetExchange;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class UserTable {
+public class UserTable{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_table_generator")
     @SequenceGenerator(name="user_table_generator", sequenceName = "user_table_id_seq", allocationSize=1)
@@ -26,9 +27,10 @@ public class UserTable {
     private long phone;
     @Column(name = "email")
     private String email;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    @Column(name = "password")
+    private String password;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
     private Role role;
     @OneToMany(mappedBy = "user")
     private Set<Review> reviews;

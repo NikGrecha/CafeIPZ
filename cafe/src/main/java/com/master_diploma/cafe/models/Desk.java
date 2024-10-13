@@ -25,7 +25,7 @@ public class Desk {
 //    @Column(name = "institution_id")
 //    private long institutionId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "institution_id", referencedColumnName = "id", nullable = false)
     private Institution institution;
     @OneToMany(mappedBy = "desk")
