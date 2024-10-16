@@ -19,18 +19,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    private final UserDetailsService userDetailsService;
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new MyUserDetailsService();
     }
-    public SecurityConfig(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("api/v1/apps/welcome", "api/v1/apps/new-user").permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("api/v1/apps/welcome", "api/v1/apps/new-user").permitAll()
                         .requestMatchers("api/v1/apps/**").authenticated())
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .build();

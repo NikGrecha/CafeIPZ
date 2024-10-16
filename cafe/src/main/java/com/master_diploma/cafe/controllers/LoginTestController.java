@@ -30,13 +30,13 @@ public class LoginTestController {
     }
 
     @GetMapping("/all-institutions")
-    @PreAuthorize("hasAuthority('Waiter')")
+//    @PreAuthorize("hasAuthority('Waiter')")
     public Iterable<Institution> allInstitutions() {
         return institutionRepository.findAll();
     }
 
     @GetMapping("/all-desks")
-    @PreAuthorize("hasAuthority('cook')")
+//    @PreAuthorize("hasAuthority('cook')")
     public Iterable<Desk> allDesks() {
         return deskRepository.findAll();
     }
