@@ -45,4 +45,6 @@ public class Dish {
             inverseJoinColumns = @JoinColumn(name = "tag_id") // Join column referencing 'Course'
     )
     private Set<Tag> tags = new HashSet<>();
+    @OneToMany(mappedBy = "dish")
+    private Set<Calculation> calculations;
 }
