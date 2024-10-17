@@ -46,31 +46,29 @@ public class TestController {
         return userTableRepository.findAll();
     }
 
-//    @RequestMapping(value = "/users/save", method = RequestMethod.POST)
-//    public ResponseEntity<UserTable> saveUser(@RequestBody UserTable user) {
-//        try {
-//            UserTable savedUser = userTableRepository.save(user);
-//            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
     @GetMapping("/roles")
     public Iterable<Role> findAllRoles(Model model){
         //        model.addAttribute("institutions", institutions);
         return roleRepository.findAll();
     }
-
-    @RequestMapping(value = "/roles/save", method = RequestMethod.POST)
-    public ResponseEntity<Role> saveRole(@RequestBody Role role) {
-        roleRepository.save(role);
+    @RequestMapping(value = "/users/save", method = RequestMethod.POST)
+    public ResponseEntity<UserTable> saveUser(@RequestBody UserTable user) {
         try {
-            Role savedRole = roleRepository.save(role);
-            return new ResponseEntity<>(savedRole, HttpStatus.CREATED);
+            UserTable savedUser = userTableRepository.save(user);
+            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+//    @RequestMapping(value = "/roles/save", method = RequestMethod.POST)
+//    public ResponseEntity<Role> saveRole(@RequestBody Role role) {
+//        roleRepository.save(role);
+//        try {
+//            Role savedRole = roleRepository.save(role);
+//            return new ResponseEntity<>(savedRole, HttpStatus.CREATED);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
 }
