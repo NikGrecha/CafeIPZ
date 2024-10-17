@@ -23,6 +23,6 @@ public class StorageFacility {
     private String address;
 
 
-    @OneToMany(mappedBy = "storage_facility")
+    @OneToMany(mappedBy = "storageFacility")
     private Set<Ingredient> ingredients;
 }
