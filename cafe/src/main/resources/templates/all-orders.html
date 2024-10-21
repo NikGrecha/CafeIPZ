@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>all-orders</title>
+</head>
+<body>
+<h1>Список всех заказов</h1>
+
+<!-- Проверка, есть ли заказы -->
+<div th:if="${orders != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>status</th>
+            <th>wishes</th>
+            <th>date_of_creation</th>
+            <th>closing_date</th>
+            <th>desk_id</th>
+            <th>user_client_id</th>
+            <th>price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Цикл по каждому заказу из модели -->
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.status}"></td>
+            <td th:text="${order.wishes}"></td>
+            <td th:text="${order.dateOfCreation}"></td>
+            <td th:text="${order.closingDate}"></td>
+            <td th:text="${order.desk.id}"></td>
+            <td th:text="${order.user.id}"></td>
+            <td th:text="${order.price}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Если заказов нет, отображаем сообщение -->
+<div th:if="${orders == null || orders.size() == 0}">
+    <p>Заказы отсутствуют.</p>
+</div>
+<h2>Создать новый заказ</h2>
+<form action="/api/v1/apps/new-order" method="post">
+    <!-- Поле для статуса заказа -->
+    <label for="status">Статус:</label>
+    <input type="text" id="status" name="status" value="true">
+
+    <label for="wishes">Пожелания:</label>
+    <input type="text" id="wishes" name="wishes">
+
+    <!-- Поле для даты создания -->
+    <label for="dateOfCreation">Дата создания:</label>
+    <input type="date" id="dateOfCreation" name="dateOfCreation" required>
+
+    <!-- Поле для даты закрытия -->
+    <label for="closingDate">Дата закрытия:</label>
+    <input type="date" id="closingDate" name="closingDate">
+
+    <label for="desk">Выберите стол:</label>
+    <select id="desk" name="deskId">
+        <!-- Проходим по списку доступных столов -->
+        <option th:each="desk : ${desks}" th:value="${desk.id}" th:text="${desk.id}"></option>
+    </select>
+
+    <label for="user">Выберите id user:</label>
+    <select id="user" name="id">
+        <!-- Проходим по списку доступных пользователей -->
+        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.id}"></option>
+    </select>
+
+    <label for="price">Цена:</label>
+    <input type="number" id="price" name="price" required>
+
+    <button type="submit">Создать заказ</button>
+</form>
+</body>
+</html>
