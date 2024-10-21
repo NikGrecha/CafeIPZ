@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Set;
 
 @Data
@@ -15,7 +16,7 @@ import java.util.Set;
 public class OrderTable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_table_generator")
-    @SequenceGenerator(name="order_table_generator", sequenceName = "order_table_id_seq", allocationSize=1)
+    @SequenceGenerator(name="order_table_generator", sequenceName = "orders_id_seq", allocationSize=1)
     @Column(name = "id")
     private long id;
     @Column(name = "status")
@@ -23,16 +24,11 @@ public class OrderTable {
     @Column(name = "wishes")
     private String wishes;
     @Column(name = "date_of_creation")
-    private Date dateOfCreation;
+    private LocalDate dateOfCreation;
     @Column(name = "closing_date")
-    private Date closingDate;
-//    @Column(name = "desk_id")
-//    private long deskId;
-//    @Column(name = "user_client_id")
-//    private long userClientId;
+    private LocalDate closingDate;
     @Column(name = "price")
     private int price;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_client_id", referencedColumnName = "id", nullable = false)
     private UserTable user;
