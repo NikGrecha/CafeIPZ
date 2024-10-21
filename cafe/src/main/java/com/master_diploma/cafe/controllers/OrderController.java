@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.aspectj.lang.annotation.DeclareError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,14 +29,7 @@ public class OrderController {
     private DeskService deskService;
     @Autowired
     private UserTableService userTableService;
-    @PostMapping("/new-order")
-    public String save(Model model, OrderTable orderTable){
-        model.addAttribute("desks", deskService.findAll());
-        model.addAttribute("users", userTableService.findAll());
-        orderTableService.save(orderTable);
-        System.out.println("saved");
-        return "redirect:/all-orders";
-    }
+
     @GetMapping("/all-orders")
     public String findAll(Model model){
         System.out.println(deskService.findAll());
@@ -44,4 +38,13 @@ public class OrderController {
         model.addAttribute("orders", orderTableService.findAll());
         return "all-orders";
     }
+
+    @PostMapping("/new-order")
+    @PreAuthorize("hasAnyRole('WAITER', 'CLIENT')")
+    public String save(@ModelAttribute OrderTable orderTable){
+        orderTableService.save(orderTable);
+        System.out.println("Order is saved");
+        return "redirect:/api/v1/apps/all-orders";
+    }
+
 }

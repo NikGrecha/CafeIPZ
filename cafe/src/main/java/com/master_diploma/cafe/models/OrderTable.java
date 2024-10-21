@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
 
@@ -24,9 +25,9 @@ public class OrderTable {
     @Column(name = "wishes")
     private String wishes;
     @Column(name = "date_of_creation")
-    private LocalDate dateOfCreation;
+    private LocalDateTime dateOfCreation;
     @Column(name = "closing_date")
-    private LocalDate closingDate;
+    private LocalDateTime closingDate;
     @Column(name = "price")
     private int price;
     @ManyToOne(fetch = FetchType.LAZY)

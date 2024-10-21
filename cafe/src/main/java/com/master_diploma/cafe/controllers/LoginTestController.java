@@ -1,13 +1,8 @@
 package com.master_diploma.cafe.controllers;
 
-import com.master_diploma.cafe.models.Desk;
-import com.master_diploma.cafe.models.Dish;
-import com.master_diploma.cafe.models.Institution;
-import com.master_diploma.cafe.models.UserTable;
-import com.master_diploma.cafe.repositories.DeskRepository;
-import com.master_diploma.cafe.repositories.DishRepository;
-import com.master_diploma.cafe.repositories.InstitutionRepository;
-import com.master_diploma.cafe.repositories.UserTableRepository;
+import com.master_diploma.cafe.models.*;
+import com.master_diploma.cafe.repositories.*;
+import com.master_diploma.cafe.services.MyUserDetailsService;
 import com.master_diploma.cafe.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +18,9 @@ public class LoginTestController {
     private InstitutionRepository institutionRepository;
     private UserService userService;
     private DeskRepository deskRepository;
+    private OrderTableRepository orderTableRepository;
+    private DishRepository dishRepository;
+    private MyUserDetailsService myUserDetailsService;
 
     @GetMapping("/welcome")
     public String welcome(){
@@ -35,14 +33,24 @@ public class LoginTestController {
         return institutionRepository.findAll();
     }
 
-    @GetMapping("/all-desks")
-//    @PreAuthorize("hasAuthority('cook')")
-    public Iterable<Desk> allDesks() {
-        return deskRepository.findAll();
-    }
     @PostMapping("/new-user")
     public String addUser(@RequestBody UserTable userTable) {
         userService.addUser(userTable);
         return "User is saved";
     }
+
+    @GetMapping("/all-desks")
+    public Iterable<Desk> allDesks() {
+        return deskRepository.findAll();
+    }
+    @PostMapping("/new-dish")
+    public String addDish(@RequestBody Dish dish) {
+        dishRepository.save(dish);
+        return "Dish is saved";
+    }
+//    @GetMapping("/getId")
+//    public Long getCurrentUserId(){
+//        return myUserDetailsService.getCurrentUserId();
+//    }
+
 }

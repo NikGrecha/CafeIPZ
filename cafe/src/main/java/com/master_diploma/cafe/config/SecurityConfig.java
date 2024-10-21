@@ -31,8 +31,10 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("api/v1/apps/welcome", "api/v1/apps/new-user").permitAll()
-                        .requestMatchers("api/v1/apps/all-institutions", "api/v1/apps/new-order", "api/v1/apps/all-orders").hasRole("WAITER")
-                        .requestMatchers("api/v1/apps/all-desks").hasRole("COOK"))
+                        .requestMatchers("api/v1/apps/all-institutions", "api/v1/apps/new-order", "api/v1/apps/all-orders").hasAnyRole("WAITER", "CLIENT")
+                        .requestMatchers("api/v1/apps/all-desks").hasRole("COOK")
+                        .requestMatchers("api/v1/apps/user-orders/**").hasAnyRole("WAITER", "CLIENT")
+                        .requestMatchers("api/v1/apps/getId").authenticated())
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .build();
     }

@@ -1,6 +1,7 @@
 package com.master_diploma.cafe.config;
 
 import com.master_diploma.cafe.models.UserTable;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,10 +12,13 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class MyUserDetails implements UserDetails {
-    private final UserTable userTable;
+    @Getter
+    private final Long id;
     private final String role;
+    private final UserTable userTable;
     public MyUserDetails(UserTable user){
         this.userTable = user;
+        this.id = userTable.getId();
         role = userTable.getRole().getName();
     }
 
