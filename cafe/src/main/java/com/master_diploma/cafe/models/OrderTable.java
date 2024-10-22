@@ -21,7 +21,7 @@ public class OrderTable {
     @Column(name = "id")
     private long id;
     @Column(name = "status")
-    private boolean status;
+    private String status;
     @Column(name = "wishes")
     private String wishes;
     @Column(name = "date_of_creation")
@@ -38,4 +38,10 @@ public class OrderTable {
     private Desk desk;
     @OneToMany(mappedBy = "order")
     private Set<DishOrder> dishOrders;
+
+    @PrePersist
+    void preInsert() {
+        if (status == null)
+            status = "In the queue";
+    }
 }
