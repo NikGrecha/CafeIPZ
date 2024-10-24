@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,5 +30,18 @@ public class MyUserDetailsService implements UserDetailsService {
         user.ifPresent(u -> System.out.println("Roles: " + u.getRole()));
         return user.map(MyUserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException(firstName + " not found"));
+    }
+
+    public Long getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserDetails) {
+                MyUserDetails userDetails = (MyUserDetails) principal;
+                return userDetails.getId();
+            }
+        }
+        return null;
     }
 }

@@ -6,7 +6,12 @@
 </head>
 <body>
 <h1>Список всех заказов</h1>
-
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
 <!-- Проверка, есть ли заказы -->
 <div th:if="${orders != null}">
     <table>
@@ -43,30 +48,25 @@
 </div>
 <h2>Создать новый заказ</h2>
 <form action="/api/v1/apps/new-order" method="post">
-    <!-- Поле для статуса заказа -->
-    <label for="status">Статус:</label>
-    <input type="text" id="status" name="status" value="true">
 
     <label for="wishes">Пожелания:</label>
     <input type="text" id="wishes" name="wishes">
 
-    <!-- Поле для даты создания -->
     <label for="dateOfCreation">Дата создания:</label>
-    <input type="date" id="dateOfCreation" name="dateOfCreation" required>
+    <input type="datetime-local" id="dateOfCreation" name="dateOfCreation" required>
 
-    <!-- Поле для даты закрытия -->
     <label for="closingDate">Дата закрытия:</label>
-    <input type="date" id="closingDate" name="closingDate">
+    <input type="datetime-local" id="closingDate" name="closingDate">
 
+<!--    Випадаючий список столів-->
     <label for="desk">Выберите стол:</label>
-    <select id="desk" name="deskId">
-        <!-- Проходим по списку доступных столов -->
+    <select id="desk" name="desk">
         <option th:each="desk : ${desks}" th:value="${desk.id}" th:text="${desk.id}"></option>
     </select>
 
+<!--    Випадаючий список користувачів-->
     <label for="user">Выберите id user:</label>
-    <select id="user" name="id">
-        <!-- Проходим по списку доступных пользователей -->
+    <select id="user" name="user">
         <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.id}"></option>
     </select>
 

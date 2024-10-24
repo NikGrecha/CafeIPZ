@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
 
@@ -20,13 +21,13 @@ public class OrderTable {
     @Column(name = "id")
     private long id;
     @Column(name = "status")
-    private boolean status;
+    private String status;
     @Column(name = "wishes")
     private String wishes;
     @Column(name = "date_of_creation")
-    private LocalDate dateOfCreation;
+    private LocalDateTime dateOfCreation;
     @Column(name = "closing_date")
-    private LocalDate closingDate;
+    private LocalDateTime closingDate;
     @Column(name = "price")
     private int price;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,4 +38,10 @@ public class OrderTable {
     private Desk desk;
     @OneToMany(mappedBy = "order")
     private Set<DishOrder> dishOrders;
+
+    @PrePersist
+    void preInsert() {
+        if (status == null)
+            status = "In the queue";
+    }
 }
