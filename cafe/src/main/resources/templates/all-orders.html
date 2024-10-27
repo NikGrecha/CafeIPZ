@@ -25,6 +25,7 @@
             <th>desk_id</th>
             <th>user_client_id</th>
             <th>price</th>
+            <th>update status</th>
         </tr>
         </thead>
         <tbody>
@@ -38,6 +39,13 @@
             <td th:text="${order.desk.id}"></td>
             <td th:text="${order.user.id}"></td>
             <td th:text="${order.price}"></td>
+            <td>
+                <form action="/api/v1/apps/update-status" method="post">
+                    <input type="hidden" name="id" th:value="${order.id}">
+                    <input type="text" id="status" name="status" placeholder="Новое значение" required>
+                    <button type="submit">Обновить</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

@@ -13,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "user_table")
 public class UserTable{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_table_generator")

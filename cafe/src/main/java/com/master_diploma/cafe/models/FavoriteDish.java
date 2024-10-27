@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "favorite_dish")
 public class FavoriteDish {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "favorite_dish_generator")

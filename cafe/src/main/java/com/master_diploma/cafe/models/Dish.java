@@ -22,8 +22,6 @@ public class Dish {
     private long id;
     @Column(name = "title")
     private String title;
-    @Column(name = "ingredients")
-    private String ingredients;
     @Column(name = "descriptions")
     private String descriptions;
     @Column(name = "recipe")

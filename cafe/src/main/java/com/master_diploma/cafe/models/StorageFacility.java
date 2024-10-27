@@ -11,6 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "storage_facility")
 public class StorageFacility {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "storage_facility_generator")

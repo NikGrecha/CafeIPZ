@@ -7,6 +7,7 @@ import com.master_diploma.cafe.services.UserTableService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,6 @@ public class OrderController {
 
     @GetMapping("/all-orders")
     public String findAll(Model model){
-        System.out.println(deskService.findAll());
         model.addAttribute("desks", deskService.findAll());
         model.addAttribute("users", userTableService.findAll());
         model.addAttribute("orders", orderTableService.findAll());
@@ -38,5 +38,10 @@ public class OrderController {
         System.out.println("Order is saved");
         return "redirect:/api/v1/apps/all-orders";
     }
-
+    @PostMapping("/update-status")
+    public String updateStatusOrder(@RequestParam String status, @RequestParam Long id){
+        orderTableService.updateStatus(status, id);
+        System.out.println("Successful");
+        return "redirect:/api/v1/apps/all-orders";
+    }
 }

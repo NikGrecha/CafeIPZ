@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "user_institution")
 public class UserInstitution {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_institution_generator")

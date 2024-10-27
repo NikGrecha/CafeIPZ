@@ -2,6 +2,7 @@ package com.master_diploma.cafe.services;
 
 import com.master_diploma.cafe.models.OrderTable;
 import com.master_diploma.cafe.repositories.OrderTableRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,5 +73,10 @@ public class OrderTableService implements OrderTableRepository {
     @Override
     public void deleteAll() {
         orderTableRepository.deleteAll();
+    }
+    @Transactional
+    @Override
+    public Integer updateStatus(String status, Long id) {
+        return orderTableRepository.updateStatus(status, id);
     }
 }

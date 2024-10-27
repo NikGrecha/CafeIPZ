@@ -25,6 +25,7 @@
             <th>desk_id</th>
             <th>user_client_id</th>
             <th>price</th>
+            <th>update status</th>
         </tr>
         </thead>
         <tbody>
@@ -38,6 +39,13 @@
             <td th:text="${order.desk.id}"></td>
             <td th:text="${order.user.id}"></td>
             <td th:text="${order.price}"></td>
+            <td>
+                <form action="/api/v1/apps/update-status" method="post">
+                    <input type="hidden" name="id" th:value="${order.id}">
+                    <input type="text" id="status" name="status" placeholder="Новое значение" required>
+                    <button type="submit">Обновить</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -48,30 +56,25 @@
 </div>
 <h2>Создать новый заказ</h2>
 <form action="/api/v1/apps/new-order" method="post">
-    <!-- Поле для статуса заказа -->
-    <label for="status">Статус:</label>
-    <input type="checkbox" id="status" name="status" value="true">
 
     <label for="wishes">Пожелания:</label>
     <input type="text" id="wishes" name="wishes">
 
-    <!-- Поле для даты создания -->
     <label for="dateOfCreation">Дата создания:</label>
     <input type="datetime-local" id="dateOfCreation" name="dateOfCreation" required>
 
-    <!-- Поле для даты закрытия -->
     <label for="closingDate">Дата закрытия:</label>
     <input type="datetime-local" id="closingDate" name="closingDate">
 
+<!--    Випадаючий список столів-->
     <label for="desk">Выберите стол:</label>
     <select id="desk" name="desk">
-        <!-- Проходим по списку доступных столов -->
         <option th:each="desk : ${desks}" th:value="${desk.id}" th:text="${desk.id}"></option>
     </select>
 
+<!--    Випадаючий список користувачів-->
     <label for="user">Выберите id user:</label>
     <select id="user" name="user">
-        <!-- Проходим по списку доступных пользователей -->
         <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.id}"></option>
     </select>
 

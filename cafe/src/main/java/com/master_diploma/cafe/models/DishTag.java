@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "dish_tag")
 public class DishTag {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dish_tag_generator")
