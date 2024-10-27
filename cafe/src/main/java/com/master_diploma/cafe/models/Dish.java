@@ -26,8 +26,8 @@ public class Dish {
     private String descriptions;
     @Column(name = "recipe")
     private String recipe;
-//    @Column(name = "institution_id")
-//    private long institutionId;
+    @Column(name = "price")
+    private double price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "institution_id", referencedColumnName = "id", nullable = false)

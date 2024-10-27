@@ -26,4 +26,7 @@ public class StorageFacility {
 
     @OneToMany(mappedBy = "storageFacility")
     private Set<Ingredient> ingredients;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "institution_id", referencedColumnName = "id", nullable = false)
+    private Institution institution;
 }

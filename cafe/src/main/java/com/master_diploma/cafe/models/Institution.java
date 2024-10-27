@@ -41,4 +41,6 @@ public class Institution {
     private Set<Award> awards;
     @OneToMany(mappedBy = "institution")
     private Set<Dish> dishes;
+    @OneToMany(mappedBy = "institution")
+    private Set<StorageFacility> storageFacilities;
 }
