@@ -9,10 +9,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Iterator;
+import java.util.List;
 
 @Repository
 public interface DeskRepository extends CrudRepository<Desk, Long> {
     @Transactional
     @Query(name = "SELECT * FROM desk WHERE institution_id = :id")
-    Iterator<Desk> findByInstitutionId(@Param("id") Long id);
+    List<Desk> findByInstitutionId(@Param("id") Long id);
 }

@@ -26,8 +26,8 @@ public class InstitutionController {
         return "institutions";
     }
     @GetMapping("/desksByInstitution/{institutionId}")
-    public String byInstitution(@PathVariable Long institutionId){
-        deskRepository.findByInstitutionId(institutionId);
+    public String byInstitution(@PathVariable Long institutionId, Model model){
+        model.addAttribute("desks", deskRepository.findByInstitutionId(institutionId));
         return "desks";
     }
 }
