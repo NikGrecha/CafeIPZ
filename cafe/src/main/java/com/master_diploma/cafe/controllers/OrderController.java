@@ -1,7 +1,9 @@
 package com.master_diploma.cafe.controllers;
 
 import com.master_diploma.cafe.models.OrderTable;
+import com.master_diploma.cafe.models.UserTable;
 import com.master_diploma.cafe.services.DeskService;
+import com.master_diploma.cafe.services.MyUserDetailsService;
 import com.master_diploma.cafe.services.OrderTableService;
 import com.master_diploma.cafe.services.UserTableService;
 import lombok.AllArgsConstructor;
@@ -23,9 +25,12 @@ public class OrderController {
     private DeskService deskService;
     @Autowired
     private UserTableService userTableService;
+    @Autowired
+    private MyUserDetailsService myUserDetailsService;
 
     @GetMapping("/all-orders")
-    public String findAll(Model model){
+    public String findAll(Model model, UserTable userTable){
+        model.addAttribute("currentUser", myUserDetailsService.getCurrentUserId());
         model.addAttribute("desks", deskService.findAll());
         model.addAttribute("users", userTableService.findAll());
         model.addAttribute("orders", orderTableService.findAll());
@@ -35,13 +40,11 @@ public class OrderController {
     @PostMapping("/new-order")
     public String save(@ModelAttribute OrderTable orderTable){
         orderTableService.save(orderTable);
-        System.out.println("Order is saved");
         return "redirect:/api/v1/apps/all-orders";
     }
     @PostMapping("/update-status")
     public String updateStatusOrder(@RequestParam String status, @RequestParam Long id){
         orderTableService.updateStatus(status, id);
-        System.out.println("Successful");
         return "redirect:/api/v1/apps/all-orders";
     }
 }

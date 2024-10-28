@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>all-institutions</title>
+</head>
+<body>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+<div th:if="${institutions != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>title</th>
+            <th>description</th>
+            <th>number_of_stars</th>
+            <th>time_open</th>
+            <th>time_close</th>
+            <th>goToReserve</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Цикл по каждому заказу из модели -->
+        <tr th:each="institution : ${institutions}">
+            <td th:text="${institution.id}"></td>
+            <td th:text="${institution.title}"></td>
+            <td th:text="${institution.description}"></td>
+            <td th:text="${institution.numberOfStars}"></td>
+            <td th:text="${institution.timeOpen}"></td>
+            <td th:text="${institution.timeClose}"></td>
+            <td>
+                <a th:href="'/api/v1/apps/desksByInstitution/' + ${institution.id}">Перейти</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

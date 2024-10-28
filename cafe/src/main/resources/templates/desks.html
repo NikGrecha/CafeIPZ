@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>all-desks</title>
+</head>
+<body>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+<div th:if="${desks != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>number_of_seats</th>
+            <th>status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Цикл по каждому заказу из модели -->
+        <tr th:each="desk : ${desks}">
+            <td th:text="${desk.id}"></td>
+            <td th:text="${desk.numberOfSeats}"></td>
+            <td th:text="${desk.status}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

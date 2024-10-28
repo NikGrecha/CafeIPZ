@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.Optional;
 
 @Service
@@ -73,5 +74,10 @@ public class DeskService implements DeskRepository {
     @Override
     public void deleteAll() {
         deskRepository.deleteAll();
+    }
+
+    @Override
+    public Iterator<Desk> findByInstitutionId(Long id) {
+        return deskRepository.findByInstitutionId(id);
     }
 }
