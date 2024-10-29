@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Cleanup;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -19,12 +21,8 @@ public class Reserve {
     @Column(name = "id")
     private long id;
     @Column(name = "date_of_creation")
-    private Date dateOfCreation;
-//    @Column(name = "desk_id")
-//    private long deskId;
-//    @Column(name = "user_client_id")
-//    private long userClientId;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime dateOfCreation;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "desk_id", referencedColumnName = "id", nullable = false)
     private Desk desk;

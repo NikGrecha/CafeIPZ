@@ -18,14 +18,17 @@
             <th>ID</th>
             <th>number_of_seats</th>
             <th>status</th>
+            <th>reserve</th>
         </tr>
         </thead>
         <tbody>
-        <!-- Цикл по каждому заказу из модели -->
         <tr th:each="desk : ${desks}">
             <td th:text="${desk.id}"></td>
             <td th:text="${desk.numberOfSeats}"></td>
             <td th:text="${desk.status}"></td>
+            <td>
+                <a th:href="'/api/v1/apps/desk/' + ${desk.id}">Перейти</a>
+            </td>
         </tr>
         </tbody>
     </table>

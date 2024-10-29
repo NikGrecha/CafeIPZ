@@ -1,9 +1,7 @@
 package com.master_diploma.cafe.controllers;
 
 import com.master_diploma.cafe.models.Desk;
-import com.master_diploma.cafe.models.Reserve;
 import com.master_diploma.cafe.repositories.DeskRepository;
-import com.master_diploma.cafe.repositories.ReserveRepository;
 import com.master_diploma.cafe.services.MyUserDetailsService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -12,23 +10,30 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("api/v1/apps")
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReserveController {
+public class DeskController {
     @Autowired
-    private ReserveRepository reserveRepository;
+    private DeskRepository deskRepository;
     @Autowired
     private MyUserDetailsService myUserDetailsService;
-
-    @PostMapping("/new-reserve")
-    public String saveReserve(@ModelAttribute Reserve reserve){
-        reserveRepository.save(reserve);
-        System.out.println("Successful");
-        return "redirect:/api/v1/apps/desks";
+    @GetMapping("/desks")
+    public String allDesks(Model model){
+        model.addAttribute("desks", deskRepository.findAll());
+        return "desks";
+    }
+    @GetMapping("/desk/{id}")
+    public String byId(Model model, @PathVariable Long id){
+        model.addAttribute("currentUser", myUserDetailsService.getCurrentUserId());
+        Optional<Desk> deskOptional = deskRepository.findById(id);
+        deskOptional.ifPresent(desk -> model.addAttribute("desk", desk));
+        return "reserve";
     }
 }

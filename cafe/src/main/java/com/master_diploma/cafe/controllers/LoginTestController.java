@@ -39,10 +39,6 @@ public class LoginTestController {
         return "User is saved";
     }
 
-    @GetMapping("/all-desks")
-    public Iterable<Desk> allDesks() {
-        return deskRepository.findAll();
-    }
     @PostMapping("/new-dish")
     public String addDish(@RequestBody Dish dish) {
         dishRepository.save(dish);

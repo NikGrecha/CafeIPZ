@@ -2,36 +2,33 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>all-desks</title>
+    <title>reserve</title>
 </head>
 <body>
-<style>
-    table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-</style>
-<div th:if="${desks != null}">
+<div>
     <table>
         <thead>
         <tr>
-            <th>ID</th>
+            <th>id</th>
             <th>number_of_seats</th>
             <th>status</th>
             <th>reserve</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="desk : ${desks}">
+        <tr>
             <td th:text="${desk.id}"></td>
             <td th:text="${desk.numberOfSeats}"></td>
             <td th:text="${desk.status}"></td>
-            <td>
-                <a th:href="'/api/v1/apps/desk/' + ${desk.id}">Перейти</a>
-            </td>
         </tr>
         </tbody>
     </table>
+    <form action="/api/v1/apps/new-reserve" method="post">
+        <input type="datetime-local" id="dateOfCreation" name="dateOfCreation">
+        <input type="hidden" id="desk.id" name="desk.id" th:value="${desk.id}">
+        <input type="hidden" name="user.id" th:value="${currentUser}">
+        <button type="submit">Забронювати</button>
+    </form>
 </div>
 </body>
 </html>
