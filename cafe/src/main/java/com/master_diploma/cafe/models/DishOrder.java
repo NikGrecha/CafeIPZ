@@ -1,5 +1,7 @@
 package com.master_diploma.cafe.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,23 +18,20 @@ public class DishOrder {
     @SequenceGenerator(name="dish_order_generator", sequenceName = "dish_order_id_seq", allocationSize=1)
     @Column(name = "id")
     private long id;
-//    @Column(name = "user_worker_id")
-//    private long userWorkerId;
-//    @Column(name = "order_id")
-//    private long orderId;
-//    @Column(name = "dish_id")
-//    private long dishId;
     @Column(name = "count_dish")
     private int countDish;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_worker_id", referencedColumnName = "id", nullable = false)
-    private UserTable user;
+    @JsonBackReference
+    private UserTable userWorker;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
+    @JsonBackReference
     private OrderTable order;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dish_id", referencedColumnName = "id", nullable = false)
+    @JsonBackReference
     private Dish dish;
 
 }

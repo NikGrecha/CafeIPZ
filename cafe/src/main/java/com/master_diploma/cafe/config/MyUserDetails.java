@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class MyUserDetails implements UserDetails {
     @Getter
     private final Long id;
+    @Getter
     private final String role;
     private final UserTable userTable;
     public MyUserDetails(UserTable user){

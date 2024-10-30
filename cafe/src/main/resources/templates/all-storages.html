@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>all-orders</title>
+</head>
+<body>
+
+<br><br>
+
+<h2>Створити новий склад</h2>
+
+<form action="/api/v1/apps/storages/save" method="post">
+
+    <label for="name">Назва:</label>
+    <input type="text" id="name" name="name">
+
+    <label for="address">Адреса:</label>
+    <input type="text" id="address" name="address" required>
+
+    <button type="submit">Створити склад</button>
+</form>
+
+<br><br>
+
+<h1>Список всіх складів</h1>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
+<div th:if="${storages != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="storage : ${storages}">
+            <td th:text="${storage.id}"></td>
+            <td th:text="${storage.name}"></td>
+            <td th:text="${storage.address}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:if="${storages == null || storages.size() == 0}">
+    <p>Склади відсутні.</p>
+</div>
+
+</body>
+</html>

@@ -44,4 +44,17 @@ public class MyUserDetailsService implements UserDetailsService {
         }
         return null;
     }
+
+    public String getCurrentUserRole() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserDetails) {
+                MyUserDetails userDetails = (MyUserDetails) principal;
+                return userDetails.getRole();
+            }
+        }
+        return null;
+    }
 }

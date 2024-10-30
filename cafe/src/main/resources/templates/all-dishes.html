@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>all-orders</title>
+</head>
+<body>
+
+<br><br>
+
+<h2>Створити нову страву</h2>
+
+<form action="/api/v1/apps/dishes/save" method="post">
+
+    <label for="title">Назва:</label>
+    <input type="text" id="title" name="title">
+
+    <label for="descriptions">Опис:</label>
+    <input type="text" id="descriptions" name="descriptions" required>
+
+    <label for="recipe">Рецепт:</label>
+    <input type="text" id="recipe" name="recipe">
+
+    <label for="price">Ціна:</label>
+    <input type="number" id="price" name="price">
+
+    <!--    Випадаючий список закладів-->
+    <label for="institution">Заклад:</label>
+    <select id="institution" name="institution">
+        <option th:each="institution : ${institutions}" th:value="${institution.id}" th:text="${institution.name}"></option>
+    </select>
+
+    <button type="submit">Створити страву</button>
+</form>
+
+<br><br>
+
+<h1>Список усіх страв</h1>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+<div th:if="${dishes != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Recipe</th>
+            <th>Price</th>
+            <th>Institution id</th>
+            <th>Institution name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Цикл по каждому заказу из модели -->
+        <tr th:each="dish : ${dishes}">
+            <td th:text="${dish.id}"></td>
+            <td th:text="${dish.title}"></td>
+            <td th:text="${dish.descriptions}"></td>
+            <td th:text="${dish.recipe}"></td>
+            <td th:text="${dish.price}"></td>
+            <td th:text="${dish.institution.id}"></td>
+            <td th:text="${dish.institution.title}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:if="${dishes == null || dishes.size() == 0}">
+    <p>Страви відсутні.</p>
+</div>
+
+</body>
+</html>

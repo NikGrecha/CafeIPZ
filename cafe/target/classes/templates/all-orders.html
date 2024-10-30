@@ -54,31 +54,28 @@
 <div th:if="${orders == null || orders.size() == 0}">
     <p>Заказы отсутствуют.</p>
 </div>
-<h2>Создать новый заказ</h2>
-<form action="/api/v1/apps/new-order" method="post">
+<h2>Замовлення тепер створюються через /menu/{institutionId}/{deskId}</h2>
+<!--<form th:action="'/api/v1/apps/' + ${dishes} + ''" method="post">-->
 
-    <label for="wishes">Пожелания:</label>
-    <input type="text" id="wishes" name="wishes">
+<!--    <label for="wishes">Пожелания:</label>-->
+<!--    <input type="text" id="wishes" name="wishes">-->
 
-    <label for="dateOfCreation">Дата создания:</label>
-    <input type="datetime-local" id="dateOfCreation" name="dateOfCreation" required>
+<!--    <label for="dateOfCreation">Дата создания:</label>-->
+<!--    <input type="datetime-local" id="dateOfCreation" name="dateOfCreation" required>-->
 
-    <label for="closingDate">Дата закрытия:</label>
-    <input type="datetime-local" id="closingDate" name="closingDate">
+<!--    <label for="closingDate">Дата закрытия:</label>-->
+<!--    <input type="datetime-local" id="closingDate" name="closingDate">-->
 
-<!--    Випадаючий список столів-->
-    <label for="desk">Выберите стол:</label>
-    <select id="desk" name="desk">
-        <option th:each="desk : ${desks}" th:value="${desk.id}" th:text="${desk.id}"></option>
-    </select>
-<!--    <label for="user">Выберите id user:</label>-->
-<!--    <select id="user" name="user">-->
-<!--        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.id}"></option>-->
+<!--&lt;!&ndash;    Випадаючий список столів&ndash;&gt;-->
+<!--    <label for="desk">Выберите стол:</label>-->
+<!--    <select id="desk" name="desk">-->
+<!--        <option th:each="desk : ${desks}" th:value="${desk.id}" th:text="${desk.id}"></option>-->
 <!--    </select>-->
-    <input type="hidden" name="id" th:value="${currentUser}">
-    <label for="price">Цена:</label>
-    <input type="number" id="price" name="price" required>
-    <button type="submit">Создать заказ</button>
-</form>
+
+<!--    <input type="hidden" name="id" th:value="${currentUser}">-->
+<!--    <label for="price">Цена:</label>-->
+<!--    <input type="number" id="price" name="price" required>-->
+<!--    <button type="submit">Создать заказ</button>-->
+<!--</form>-->
 </body>
 </html>

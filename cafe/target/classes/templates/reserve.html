@@ -25,8 +25,8 @@
     </table>
     <form action="/api/v1/apps/new-reserve" method="post">
         <input type="datetime-local" id="dateOfCreation" name="dateOfCreation">
-        <input type="text" id="desk.id" name="desk.id" th:value="${desk.id}">
-        <input type="text" name="user.id" th:value="${currentUser}">
+        <input type="hidden" id="desk.id" name="desk.id" th:value="${desk.id}">
+        <input type="hidden" name="user.id" th:value="${currentUser}">
         <button type="submit">Забронювати</button>
     </form>
 </div>

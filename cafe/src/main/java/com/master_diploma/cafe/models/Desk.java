@@ -21,7 +21,7 @@ public class Desk {
     @Column(name = "number_of_seats")
     private int numberOfSeats;
     @Column(name = "status")
-    private boolean status;
+    private String status;
 //    @Column(name = "institution_id")
 //    private long institutionId;
 

@@ -46,7 +46,7 @@ public class UserTable{
     private Set<Reserve> reserves;
     @OneToMany(mappedBy = "user")
     private Set<OrderTable> orders;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "userWorker")
     private Set<DishOrder> dishOrders;
     @OneToMany(mappedBy = "user")
     private Set<FavoriteDish> favoriteDishes;

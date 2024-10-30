@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>all-orders</title>
+</head>
+<body>
+
+<br><br>
+
+<h2>Створити новий інгредієнт</h2>
+
+<form action="/api/v1/apps/ingredients/save" method="post">
+
+    <label for="name">Назва:</label>
+    <input type="text" id="name" name="name">
+
+    <label for="available">Наразі доступно, грам:</label>
+    <input type="number" id="available" name="available" required>
+
+    <label for="storageFacility">Склад:</label>
+    <select id="storageFacility" name="storageFacility">
+        <option th:each="storageFacility : ${storageFacilities}" th:value="${storageFacility.id}" th:text="${storageFacility.id}"></option>
+    </select>
+
+    <button type="submit">Створити інгредієнт</button>
+</form>
+
+<br><br>
+
+<h1>Список всіх інгредієнтів</h1>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
+<div th:if="${ingredients != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Available</th>
+            <th>Storage</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="ingredient : ${ingredients}">
+            <td th:text="${ingredient.id}"></td>
+            <td th:text="${ingredient.name}"></td>
+            <td th:text="${ingredient.available}"></td>
+            <td th:text="${ingredient.storageFacility.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:if="${ingredients == null || ingredients.size() == 0}">
+    <p>Інгдерієнти відсутні.</p>
+</div>
+
+</body>
+</html>

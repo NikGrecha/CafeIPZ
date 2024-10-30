@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>all-orders</title>
+</head>
+<body>
+
+<br><br>
+
+<h2>Створити нову страву</h2>
+
+<form action="/api/v1/apps/dishes/save" method="post">
+
+    <label for="title">Назва:</label>
+    <input type="text" id="title" name="title">
+
+    <label for="descriptions">Опис:</label>
+    <input type="text" id="descriptions" name="descriptions" required>
+
+    <label for="recipe">Рецепт:</label>
+    <input type="text" id="recipe" name="recipe">
+
+    <label for="price">Ціна:</label>
+    <input type="number" id="price" name="price">
+
+    <!--    Випадаючий список закладів-->
+    <label for="institution">Заклад:</label>
+    <select id="institution" name="institution">
+        <option th:each="institution : ${institutions}" th:value="${institution.id}" th:text="${institution.name}"></option>
+    </select>
+
+    <button type="submit">Створити страву</button>
+</form>
+
+<br><br>
+
+<h1>Список усіх страв</h1>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+<div th:if="${dishes != null}">
+    <form action="/api/v1/apps/new-order" method="post">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+<!--                <th>Recipe</th>-->
+                <th>Price</th>
+                <th>Institution id</th>
+                <th>Institution name</th>
+                <th>Count</th>
+                <th>dishId_hidden</th>
+                <th>workerId_hidden</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="dish, stat : ${dishes}">
+                    <td th:text="${dish.id}"></td>
+                    <td th:text="${dish.title}"></td>
+                    <td th:text="${dish.descriptions}"></td>
+                    <td th:text="${dish.price}"></td>
+                    <td th:text="${dish.institution.id}"></td>
+                    <td th:text="${dish.institution.title}"></td>
+                    <td><input type="number" th:name="'dishOrders[' + ${stat.index} + '].countDish'" id="countDish" required value="0"></td>
+                    <td><input type="number" th:name="'dishOrders[' + ${stat.index} + '].dish.id'" id="dish" th:value="${dish.id}"></td>
+                    <td><input th:if="${users}" type="number" th:name="'dishOrders[' + ${stat.index} + '].userWorker.id'" id="userWorkerId" th:value="${currentUserId}"></td>
+<!--                    FIX! HARDCODED VALUE-->
+                    <td><input th:unless="${users}" type="number" th:name="'dishOrders[' + ${stat.index} + '].userWorker.id'" id="userWorkerIdHardcoded" value="10"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div th:if="${currentUserRole} == 'ROLE_WAITER'">
+            <label for="user">Виберіть користувача, якому створюєте замовлення:</label>
+            <select id="user" name="user">
+                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.id} + ' ' + ${user.firstName} + '' + ${user.lastName}"></option>
+            </select>
+        </div>
+        <div th:unless="${currentUserRole} == 'ROLE_WAITER'">
+            <input type="hidden" name="user" id="clientId" th:value="${currentUserId}">
+        </div>
+
+        <label for="wishes">Побажання до замовлення:</label>
+        <input type="text" id="wishes" name="wishes">
+        <input type="hidden" id="desk" name="desk" th:value="${deskId}">
+        <input type="submit" value="Створити замовлення">
+    </form>
+</div>
+
+<div th:if="${dishes == null || dishes.size() == 0}">
+    <p>Страви відсутні.</p>
+</div>
+
+</body>
+</html>

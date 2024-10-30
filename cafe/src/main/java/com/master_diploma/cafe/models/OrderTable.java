@@ -1,15 +1,15 @@
 package com.master_diploma.cafe.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -31,15 +31,19 @@ public class OrderTable {
     @Column(name = "closing_date")
     private LocalDateTime closingDate;
     @Column(name = "price")
-    private int price;
+    private double price;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_client_id", referencedColumnName = "id", nullable = false)
+    @JsonManagedReference
     private UserTable user;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "desk_id", referencedColumnName = "id", nullable = false)
+    @JsonManagedReference
     private Desk desk;
     @OneToMany(mappedBy = "order")
-    private Set<DishOrder> dishOrders;
+    @JsonManagedReference
+    private List<DishOrder> dishOrders;
 
     @PrePersist
     void preInsert() {
