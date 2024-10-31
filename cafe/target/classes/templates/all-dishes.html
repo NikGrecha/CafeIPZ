@@ -27,7 +27,7 @@
     <!--    Випадаючий список закладів-->
     <label for="institution">Заклад:</label>
     <select id="institution" name="institution">
-        <option th:each="institution : ${institutions}" th:value="${institution.id}" th:text="${institution.name}"></option>
+        <option th:each="institution : ${institutions}" th:value="${institution.id}" th:text="${institution.title}"></option>
     </select>
 
     <button type="submit">Створити страву</button>

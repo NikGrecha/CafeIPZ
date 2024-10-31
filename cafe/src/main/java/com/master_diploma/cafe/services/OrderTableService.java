@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 @AllArgsConstructor
@@ -78,5 +79,10 @@ public class OrderTableService implements OrderTableRepository {
     @Override
     public Integer updateStatus(String status, Long id) {
         return orderTableRepository.updateStatus(status, id);
+    }
+
+    @Override
+    public List<OrderTable> findByUserId(Long id) {
+        return orderTableRepository.findByUserId(id);
     }
 }

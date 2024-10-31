@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>user-order</title>
+</head>
+<body>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+<div th:if="${orders != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>status</th>
+            <th>wishes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.status}"></td>
+            <td th:text="${order.wishes}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:if="${order == null || order.size() == 0}">
+    <p>Заказы отсутствуют.</p>
+</div>
+</body>
+</html>

@@ -22,7 +22,7 @@ public class DishController {
     private InstitutionRepository institutionRepository;
 
     @GetMapping("/view")
-    public String  findAllDishes(Model model){
+    public String findAllDishes(Model model){
         model.addAttribute("dishes", dishRepository.findAll());
         model.addAttribute("institutions", institutionRepository.findAll());
         return "all-dishes";

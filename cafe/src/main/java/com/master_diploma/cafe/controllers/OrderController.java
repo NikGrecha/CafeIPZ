@@ -57,7 +57,12 @@ public class OrderController {
         }
         return "menu";
     }
-
+    @GetMapping("/user-orders/{id}")
+    public String userPanelPage(Model model, @PathVariable Long id){
+        myUserDetailsService.getCurrentUserId();
+        model.addAttribute("orders", orderTableService.findByUserId(id));
+        return "user-orders";
+    }
     @PostMapping("/new-order")
     public String save(@ModelAttribute OrderTable orderTable){
 

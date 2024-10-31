@@ -39,7 +39,6 @@ public class TestController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @GetMapping("/users")
     public Iterable<UserTable> findAllUsers(Model model){
         //        model.addAttribute("institutions", institutions);
