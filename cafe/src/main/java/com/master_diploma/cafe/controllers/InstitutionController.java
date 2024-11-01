@@ -2,6 +2,7 @@ package com.master_diploma.cafe.controllers;
 
 import com.master_diploma.cafe.repositories.DeskRepository;
 import com.master_diploma.cafe.repositories.InstitutionRepository;
+import com.master_diploma.cafe.repositories.ReviewRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,17 @@ public class InstitutionController {
     private InstitutionRepository institutionRepository;
     @Autowired
     private DeskRepository deskRepository;
+    @Autowired
+    private ReviewRepository reviewRepository;
     @GetMapping("/institutions")
     public String allInstitutions(Model model){
         model.addAttribute("institutions", institutionRepository.findAll());
         return "institutions";
     }
     @GetMapping("/desksByInstitution/{institutionId}")
-    public String byInstitution(@PathVariable Long institutionId, Model model){
+    public String byInstitution(@PathVariable Long institutionId,Model model){
         model.addAttribute("desks", deskRepository.findByInstitutionId(institutionId));
+        model.addAttribute("reviews", reviewRepository.findReviewByInstitutionId(institutionId));
         return "desks";
     }
 }

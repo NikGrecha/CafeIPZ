@@ -33,5 +33,27 @@
         </tbody>
     </table>
 </div>
+<div th:if="${reviews != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>StarsFood</th>
+            <th>StarsService</th>
+            <th>StarsAtmosphere</th>
+            <th>Description</th>
+            <th>DateOfCreation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="review : ${reviews}">
+            <td th:text="${review.starsFood}"></td>
+            <td th:text="${review.starsService}"></td>
+            <td th:text="${review.starsAtmosphere}"></td>
+            <td th:text="${review.description}"></td>
+            <td th:text="${review.dateOfCreation}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

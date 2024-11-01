@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -17,8 +19,6 @@ public class Review {
     @SequenceGenerator(name="review_generator", sequenceName = "review_id_seq", allocationSize=1)
     @Column(name = "id")
     private long id;
-//    @Column(name = "user_client_id")
-//    private long userClientId;
     @Column(name = "stars_food")
     private double starsFood;
     @Column(name = "stars_service")
@@ -28,9 +28,7 @@ public class Review {
     @Column(name = "description")
     private String description;
     @Column(name = "date_of_creation")
-    private Date dateOfCreation;
-//    @Column(name = "institution_id")
-//    private long institutionId;
+    private LocalDateTime dateOfCreation;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_client_id", referencedColumnName = "id", nullable = false)

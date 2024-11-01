@@ -15,7 +15,6 @@ import java.util.Set;
 @Entity
 public class Institution {
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "institution_generator")
     @SequenceGenerator(name="institution_generator", sequenceName = "institution_id_seq", allocationSize=1)
     @Column(name = "id")
@@ -32,7 +31,7 @@ public class Institution {
     private Time timeClose;
 
     @OneToMany(mappedBy = "institution")
-    private Set<Review> reviews;
+    private Set<Review> reviews = new HashSet<>();;
     @ManyToMany(mappedBy = "institutions")
     private Set<UserTable> employees = new HashSet<>();
     @OneToMany(mappedBy = "institution")

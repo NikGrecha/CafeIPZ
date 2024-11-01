@@ -42,11 +42,11 @@ public class SecurityConfig {
                         .requestMatchers("api/v1/apps/new-order", "api/v1/apps/all-orders").hasAnyRole("WAITER", "CLIENT")
                         .requestMatchers("api/v1/apps/all-desks").hasRole("COOK")
                         .requestMatchers("api/v1/apps/update-status").hasRole("WAITER")
-                        .requestMatchers("api/v1/apps/desksByInstitution/**"
-                                , "api/v1/apps/new-reserve").hasRole("CLIENT")
+                        .requestMatchers("api/v1/apps/new-reserve").hasRole("CLIENT")
                         .requestMatchers("api/v1/apps/user-orders/**", "api/v1/apps/desks", "api/v1/apps/desk/**").hasAnyRole("WAITER", "CLIENT")
                         .requestMatchers("api/v1/apps/ingredients/**").hasAnyRole("COOK")
-                        .requestMatchers("api/v1/apps/dishes/view", "api/v1/apps/user-orders/**", "api/v1/apps/institutions").hasAnyRole("CLIENT", "WAITER", "COOK")
+                        .requestMatchers("api/v1/apps/dishes/view", "api/v1/apps/user-orders/**", "api/v1/apps/institutions"
+                                , "api/v1/apps/reviews/add", "api/v1/apps/add/**", "api/v1/apps/desksByInstitution/**").hasAnyRole("CLIENT", "WAITER", "COOK")
                         .requestMatchers("api/v1/apps/dishes/save").hasRole("COOK")
                         .requestMatchers("api/v1/apps/menu/**").hasAnyRole("WAITER", "CLIENT")
                         .requestMatchers("api/v1/apps/menu/**").hasAnyRole("WAITER", "CLIENT")

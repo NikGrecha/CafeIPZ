@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добавить отзыв</title>
+</head>
+<body>
+<h1>Добавить отзыв для заведения <span th:text="${institution.title}">Название заведения</span></h1>
+
+<!-- Форма для добавления отзыва -->
+<form action="/api/v1/apps/reviews/add" method="post">
+    <!-- Скрытое поле для ID заведения -->
+    <input type="hidden" name="institution.id" th:value="${institution.id}" />
+    <input type="hidden" name="user.id" th:value="${user}" />
+    <!-- Поле для оценки еды -->
+    <label for="starsFood">Оценка еды:</label>
+    <input type="number" id="starsFood" name="starsFood" min="1" max="5" step="0.5" required /><br/>
+
+    <!-- Поле для оценки сервиса -->
+    <label for="starsService">Оценка сервиса:</label>
+    <input type="number" id="starsService" name="starsService" min="1" max="5" step="0.5" required /><br/>
+
+    <!-- Поле для оценки атмосферы -->
+    <label for="starsAtmosphere">Оценка атмосферы:</label>
+    <input type="number" id="starsAtmosphere" name="starsAtmosphere" min="1" max="5" step="0.5" required /><br/>
+
+    <!-- Поле для комментария -->
+    <label for="description">Комментарий:</label><br/>
+    <textarea id="description" name="description" required></textarea><br/>
+
+    <button type="submit">Отправить отзыв</button>
+</form>
+</body>
+</html>
