@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("api/v1/apps")
 @AllArgsConstructor
@@ -40,7 +42,10 @@ public class ReviewController {
     }
     @PostMapping("/reviews/add")
     public String addReview(@ModelAttribute("review") Review review, Model model) {
-        model.addAttribute("institutions", institutionRepository.findAll());
+
+        Optional<Institution> institution = institutionRepository.findById(review.getInstitution().getId());
+        institution.ifPresent(review::setInstitution);
+
         reviewService.saveReview(review);
         return "redirect:/api/v1/apps/institutions";
     }

@@ -30,6 +30,7 @@ public class UserTable{
     private String email;
     @Column(name = "password")
     private String password;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private Role role;
