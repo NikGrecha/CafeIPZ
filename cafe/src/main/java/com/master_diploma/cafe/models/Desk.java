@@ -22,12 +22,16 @@ public class Desk {
     private int numberOfSeats;
     @Column(name = "status")
     private String status;
-//    @Column(name = "institution_id")
-//    private long institutionId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "institution_id", referencedColumnName = "id", nullable = false)
     private Institution institution;
     @OneToMany(mappedBy = "desk")
     private Set<OrderTable> orders;
+
+    @PrePersist
+    void preInsert() {
+        if (status == null)
+            status = "vacant";
+    }
 }

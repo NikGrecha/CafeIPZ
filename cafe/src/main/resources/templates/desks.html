@@ -5,6 +5,17 @@
     <title>all-desks</title>
 </head>
 <body>
+
+<h2>Створити стіл</h2>
+<div th:if="${currentUserRole == 'ROLE_WAITER'}">
+    <form action="/api/v1/apps/new-desk" method="post">
+        <input type="number" id="numberOfSeats" name="numberOfSeats" required>
+        <input type="hidden" id="institution.id" name="institution.id" th:value="${institutionId}">
+        <button type="submit">Створити стіл</button>
+    </form>
+</div>
+
+
 <style>
     table, th, td {
         border: 1px solid black;
@@ -29,28 +40,6 @@
             <td>
                 <a th:href="'/api/v1/apps/desk/' + ${desk.id}">Перейти</a>
             </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div th:if="${reviews != null}">
-    <table>
-        <thead>
-        <tr>
-            <th>StarsFood</th>
-            <th>StarsService</th>
-            <th>StarsAtmosphere</th>
-            <th>Description</th>
-            <th>DateOfCreation</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="review : ${reviews}">
-            <td th:text="${review.starsFood}"></td>
-            <td th:text="${review.starsService}"></td>
-            <td th:text="${review.starsAtmosphere}"></td>
-            <td th:text="${review.description}"></td>
-            <td th:text="${review.dateOfCreation}"></td>
         </tr>
         </tbody>
     </table>

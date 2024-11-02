@@ -11,7 +11,6 @@ import java.util.List;
 
 @Repository
 public interface ReviewRepository extends CrudRepository<Review, Long> {
-    @Transactional
-    @Query(value = "SELECT * FROM review WHERE institution_id = :id", nativeQuery = true)
-    List<Review> findReviewByInstitutionId(@Param("id") Long institutionId);
+
+    Iterable<Review> findByInstitutionId(Long institutionId);
 }

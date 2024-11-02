@@ -32,12 +32,9 @@ public class ReviewController {
     private MyUserDetailsService myUserDetailsService;
     @GetMapping("/add/{institutionId}")
     public String showReviewForm(@PathVariable("institutionId") Long institutionId, Model model) {
-        Institution institution = institutionService.getInstitutionById(institutionId);
-        Review review = new Review();
-        review.setInstitution(institution);
         model.addAttribute("user", myUserDetailsService.getCurrentUserId());
-        model.addAttribute("institution", institution);
-        model.addAttribute("review", review);
+        model.addAttribute("institution", institutionService.getInstitutionById(institutionId));
+        model.addAttribute("reviews", reviewService.findByInstitutionId(institutionId));
         return "add-review";
     }
     @PostMapping("/reviews/add")

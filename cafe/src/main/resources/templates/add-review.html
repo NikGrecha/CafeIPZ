@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Добавить отзыв</title>
+    <title>Додати відгук</title>
 </head>
 <body>
-<h1>Добавить отзыв для заведения <span th:text="${institution.title}">Название заведения</span></h1>
+<h1>Додати відгук для закладу <span th:text="${institution.title}">Назва закладу</span></h1>
 
 <!-- Форма для добавления отзыва -->
 <form action="/api/v1/apps/reviews/add" method="post">
@@ -12,22 +12,57 @@
     <input type="hidden" name="institution.id" th:value="${institution.id}" />
     <input type="hidden" name="user.id" th:value="${user}" />
     <!-- Поле для оценки еды -->
-    <label for="starsFood">Оценка еды:</label>
+    <label for="starsFood">Оцінка їжі:</label>
     <input type="number" id="starsFood" name="starsFood" min="1" max="5" step="0.5" required /><br/>
 
     <!-- Поле для оценки сервиса -->
-    <label for="starsService">Оценка сервиса:</label>
+    <label for="starsService">Оцінка сервісу:</label>
     <input type="number" id="starsService" name="starsService" min="1" max="5" step="0.5" required /><br/>
 
     <!-- Поле для оценки атмосферы -->
-    <label for="starsAtmosphere">Оценка атмосферы:</label>
+    <label for="starsAtmosphere">Оцінка атмосфери:</label>
     <input type="number" id="starsAtmosphere" name="starsAtmosphere" min="1" max="5" step="0.5" required /><br/>
 
     <!-- Поле для комментария -->
-    <label for="description">Комментарий:</label><br/>
+    <label for="description">Коментар:</label><br/>
     <textarea id="description" name="description" required></textarea><br/>
 
-    <button type="submit">Отправить отзыв</button>
+    <button type="submit">Надіслати відгук</button>
 </form>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
+<div th:if="${reviews != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Дата створення</th>
+            <th>Автор</th>
+            <th>Оцінка їжі</th>
+            <th>Оцінка сервісу</th>
+            <th>Оцінка атмосфери</th>
+            <th>Опис</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="review : ${reviews}">
+            <td th:text="${review.id}"></td>
+            <td th:text="${review.dateOfCreation}"></td>
+            <td th:text="${review.user.firstName} + ' ' + ${review.user.lastName}"></td>
+            <td th:text="${review.starsFood}"></td>
+            <td th:text="${review.starsService}"></td>
+            <td th:text="${review.starsAtmosphere}"></td>
+            <td th:text="${review.description}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>

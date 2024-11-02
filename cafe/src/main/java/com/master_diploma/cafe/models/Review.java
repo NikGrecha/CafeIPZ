@@ -30,7 +30,7 @@ public class Review {
     @Column(name = "date_of_creation")
     private LocalDateTime dateOfCreation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_client_id", referencedColumnName = "id", nullable = false)
     private UserTable user;
     @ManyToOne(fetch = FetchType.LAZY)

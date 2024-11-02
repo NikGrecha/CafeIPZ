@@ -22,7 +22,7 @@
             <th>time_open</th>
             <th>time_close</th>
             <th>goToReserve</th>
-            <th>Review</th>
+            <th>goToReview</th>
         </tr>
         </thead>
         <tbody>
@@ -35,10 +35,10 @@
             <td th:text="${institution.timeOpen}"></td>
             <td th:text="${institution.timeClose}"></td>
             <td>
-                <a th:href="'/api/v1/apps/desksByInstitution/' + ${institution.id}">Перейти</a>
+                <a th:href="'/api/v1/apps/desks/' + ${institution.id}">Перейти</a>
             </td>
             <td>
-                <a th:href="'/api/v1/apps/add/' + ${institution.id}">Залишити відгук</a>
+                <a th:href="'/api/v1/apps/add/' + ${institution.id}">Переглянути відгуки</a>
             </td>
         </tr>
         </tbody>

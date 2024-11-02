@@ -40,4 +40,8 @@ public class ReviewService {
         institution.setNumberOfStars(averageRating);
         institutionRepository.save(institution);
     }
+
+    public Iterable<Review> findByInstitutionId(Long institutionId){
+        return reviewRepository.findByInstitutionId(institutionId);
+    }
 }

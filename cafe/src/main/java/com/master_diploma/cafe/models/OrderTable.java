@@ -37,7 +37,7 @@ public class OrderTable {
     @JoinColumn(name = "user_client_id", referencedColumnName = "id", nullable = false)
     @JsonManagedReference
     private UserTable user;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "desk_id", referencedColumnName = "id", nullable = false)
     @JsonManagedReference
     private Desk desk;

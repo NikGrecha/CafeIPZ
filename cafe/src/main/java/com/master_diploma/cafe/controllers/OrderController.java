@@ -3,6 +3,7 @@ package com.master_diploma.cafe.controllers;
 import com.master_diploma.cafe.models.*;
 import com.master_diploma.cafe.repositories.DishOrderRepository;
 import com.master_diploma.cafe.repositories.DishRepository;
+import com.master_diploma.cafe.repositories.InstitutionRepository;
 import com.master_diploma.cafe.services.DeskService;
 import com.master_diploma.cafe.services.MyUserDetailsService;
 import com.master_diploma.cafe.services.OrderTableService;
@@ -31,6 +32,8 @@ public class OrderController {
     @Autowired
     private UserTableService userTableService;
     @Autowired
+    private InstitutionRepository institutionRepository;
+    @Autowired
     private DishRepository dishRepository;
     @Autowired
     private DishOrderRepository dishOrderRepository;
@@ -46,8 +49,11 @@ public class OrderController {
         return "all-orders";
     }
 
-    @GetMapping("/menu/{institutionId}/{deskId}")
-    public String menuView(Model model, @PathVariable int institutionId, @PathVariable int deskId){
+    @GetMapping("/menu/{deskId}")
+    public String menuView(Model model, @PathVariable long deskId){
+        Desk desk = deskService.findById(deskId).get();
+        long institutionId = institutionRepository.findById(desk.getInstitution().getId()).get().getId();
+
         model.addAttribute("dishes", dishRepository.findByInstitutionId(institutionId));
         model.addAttribute("currentUserId", myUserDetailsService.getCurrentUserId());
         model.addAttribute("currentUserRole", myUserDetailsService.getCurrentUserRole());
@@ -74,9 +80,13 @@ public class OrderController {
 
         dishOrders.forEach(el -> el.setOrder(orderTable));
 
+        long institutionId = orderTable.getDesk().getInstitution().getId();
         dishOrderRepository.saveAll(dishOrders);
 
-        return "redirect:/api/v1/apps/all-orders";
+        if(myUserDetailsService.getCurrentUserRole().equals("ROLE_CLIENT"))
+            return "redirect:/api/v1/apps/user-orders";
+        else
+            return "redirect:/api/v1/apps/desks/" + institutionId;
     }
 
     @PostMapping("/update-status")
@@ -95,7 +105,6 @@ public class OrderController {
 
         orderTable.getDishOrders().forEach(dishOrder -> {
             Dish fullDish = dishRepository.findById(dishOrder.getDish().getId()).get();
-//            fullDish.setInstitution(null);
             dishOrder.setDish(fullDish);
         });
 
