@@ -1,6 +1,7 @@
 package com.master_diploma.cafe.controllers;
 
 import com.master_diploma.cafe.models.*;
+import com.master_diploma.cafe.repositories.DishFavoriteDishDTORepository;
 import com.master_diploma.cafe.repositories.DishOrderRepository;
 import com.master_diploma.cafe.repositories.DishRepository;
 import com.master_diploma.cafe.repositories.InstitutionRepository;
@@ -8,6 +9,7 @@ import com.master_diploma.cafe.services.DeskService;
 import com.master_diploma.cafe.services.MyUserDetailsService;
 import com.master_diploma.cafe.services.OrderTableService;
 import com.master_diploma.cafe.services.UserTableService;
+import com.master_diploma.cafe.views.DishFavoriteDishView;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,8 @@ public class OrderController {
     @Autowired
     private DishOrderRepository dishOrderRepository;
     @Autowired
+    private DishFavoriteDishDTORepository dishFavoriteDishDTORepository;
+    @Autowired
     private MyUserDetailsService myUserDetailsService;
 
     @GetMapping("/all-orders")
@@ -54,7 +58,7 @@ public class OrderController {
         Desk desk = deskService.findById(deskId).get();
         long institutionId = institutionRepository.findById(desk.getInstitution().getId()).get().getId();
 
-        model.addAttribute("dishes", dishRepository.findByInstitutionId(institutionId));
+        model.addAttribute("dishes", dishFavoriteDishDTORepository.findByInstitutionId(institutionId, myUserDetailsService.getCurrentUserId()));
         model.addAttribute("currentUserId", myUserDetailsService.getCurrentUserId());
         model.addAttribute("currentUserRole", myUserDetailsService.getCurrentUserRole());
         model.addAttribute("deskId", deskId);
@@ -84,7 +88,7 @@ public class OrderController {
         dishOrderRepository.saveAll(dishOrders);
 
         if(myUserDetailsService.getCurrentUserRole().equals("ROLE_CLIENT"))
-            return "redirect:/api/v1/apps/user-orders";
+            return "redirect:/api/v1/apps/user-orders/" + myUserDetailsService.getCurrentUserId();
         else
             return "redirect:/api/v1/apps/desks/" + institutionId;
     }

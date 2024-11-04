@@ -23,15 +23,15 @@ public class DishOrder {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_worker_id", referencedColumnName = "id", nullable = false)
-    @JsonBackReference
+//    @JsonBackReference
     private UserTable userWorker;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
-    @JsonBackReference
+//    @JsonBackReference
     private OrderTable order;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dish_id", referencedColumnName = "id", nullable = false)
-    @JsonBackReference
+//    @JsonBackReference
     private Dish dish;
 
 }
