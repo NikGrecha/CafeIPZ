@@ -25,11 +25,11 @@ public class MyUserDetailsService implements UserDetailsService {
     private UserTableRepository userTableRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String firstName) throws UsernameNotFoundException {
-        Optional<UserTable> user = Optional.ofNullable(userTableRepository.findByFirstName(firstName));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<UserTable> user = userTableRepository.findByEmail(email);
         user.ifPresent(u -> System.out.println("Roles: " + u.getRole()));
         return user.map(MyUserDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException(firstName + " not found"));
+                .orElseThrow(() -> new UsernameNotFoundException(email + " not found"));
     }
 
     public Long getCurrentUserId() {

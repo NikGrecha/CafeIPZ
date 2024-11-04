@@ -4,24 +4,33 @@
     <title>Регистрация</title>
 </head>
 <body>
-<h1>Регистрация</h1>
-<form action="#" th:action="@{/register}" th:object="${user}" method="post">
-    <label>Имя:</label>
-    <input type="text" th:field="*{firstName}" required /><br/>
-
-    <label>Фамилия:</label>
-    <input type="text" th:field="*{lastName}" required /><br/>
-
-    <label>Телефон:</label>
-    <input type="text" th:field="*{phone}" required /><br/>
-
-    <label>Email:</label>
-    <input type="email" th:field="*{email}" required /><br/>
-
-    <label>Пароль:</label>
-    <input type="password" th:field="*{password}" required /><br/>
-
+<h2>Регистрация</h2>
+<form action="/registered" method="post">
+    <div>
+        <label>Имя:</label>
+        <input type="text" name="firstName" required />
+    </div>
+    <div>
+        <label>Фамилия:</label>
+        <input type="text" name="lastName" required />
+    </div>
+    <div>
+        <label>Email:</label>
+        <input type="email" name="email" required />
+    </div>
+    <div>
+        <label>Телефон:</label>
+        <input type="text" name="phone" required />
+    </div>
+    <div>
+        <label>Пароль:</label>
+        <input type="password" name="password" required />
+    </div>
     <button type="submit">Зарегистрироваться</button>
 </form>
+<a href="/login">Вже зареєстрований</a>
+<div th:if="${error}">
+    <p th:text="${error}" style="color:red;"></p>
+</div>
 </body>
 </html>

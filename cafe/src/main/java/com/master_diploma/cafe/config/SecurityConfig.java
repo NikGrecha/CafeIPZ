@@ -38,7 +38,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("api/v1/apps/welcome", "api/v1/apps/new-user").permitAll()
+                        .requestMatchers("/", "/register", "/registered", "/login", "api/v1/apps/welcome", "api/v1/apps/new-user").permitAll()
                         .requestMatchers("api/v1/apps/new-order", "api/v1/apps/all-orders").hasAnyRole("WAITER", "CLIENT")
                         .requestMatchers("api/v1/apps/update-status").hasRole("WAITER")
                         .requestMatchers("api/v1/apps/new-reserve").hasAnyRole("CLIENT", "WAITER")
@@ -54,6 +54,7 @@ public class SecurityConfig {
                         .requestMatchers("api/v1/apps/storages/save").hasAnyRole("OWNER")
                         .requestMatchers("api/v1/apps/getId").authenticated())
                 .formLogin(login -> login
+                        .loginPage("/login")
                         .permitAll()
                         .successHandler(customSuccessHandler())
                 )

@@ -56,27 +56,5 @@
 </div>
 <h2>Замовлення тепер створюються через /menu/{institutionId}/{deskId}</h2>
 <a th:href="'/api/v1/apps/user-orders/' + ${currentUser}">Мої замовлення</a>
-<!--<form th:action="'/api/v1/apps/' + ${dishes} + ''" method="post">-->
-
-<!--    <label for="wishes">Пожелания:</label>-->
-<!--    <input type="text" id="wishes" name="wishes">-->
-
-<!--    <label for="dateOfCreation">Дата создания:</label>-->
-<!--    <input type="datetime-local" id="dateOfCreation" name="dateOfCreation" required>-->
-
-<!--    <label for="closingDate">Дата закрытия:</label>-->
-<!--    <input type="datetime-local" id="closingDate" name="closingDate">-->
-
-<!--&lt;!&ndash;    Випадаючий список столів&ndash;&gt;-->
-<!--    <label for="desk">Выберите стол:</label>-->
-<!--    <select id="desk" name="desk">-->
-<!--        <option th:each="desk : ${desks}" th:value="${desk.id}" th:text="${desk.id}"></option>-->
-<!--    </select>-->
-
-<!--    <input type="hidden" name="id" th:value="${currentUser}">-->
-<!--    <label for="price">Цена:</label>-->
-<!--    <input type="number" id="price" name="price" required>-->
-<!--    <button type="submit">Создать заказ</button>-->
-<!--</form>-->
 </body>
 </html>

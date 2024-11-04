@@ -21,14 +21,7 @@ public class LoginTestController {
     private OrderTableRepository orderTableRepository;
     private DishRepository dishRepository;
     private MyUserDetailsService myUserDetailsService;
-
-    @GetMapping("/welcome")
-    public String welcome(){
-        return "Welcome to the unprotected page";
-    }
-
     @GetMapping("/all-institutions")
-//    @PreAuthorize("hasAuthority('Waiter')")
     public Iterable<Institution> allInstitutions() {
         return institutionRepository.findAll();
     }
@@ -44,9 +37,4 @@ public class LoginTestController {
         dishRepository.save(dish);
         return "Dish is saved";
     }
-//    @GetMapping("/getId")
-//    public Long getCurrentUserId(){
-//        return myUserDetailsService.getCurrentUserId();
-//    }
-
 }

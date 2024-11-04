@@ -52,7 +52,6 @@ public class OrderController {
         model.addAttribute("orders", orderTableService.findAll());
         return "all-orders";
     }
-
     @GetMapping("/menu/{deskId}")
     public String menuView(Model model, @PathVariable long deskId){
         Desk desk = deskService.findById(deskId).get();

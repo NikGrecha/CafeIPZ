@@ -27,7 +27,6 @@ public class TestController {
 
     @GetMapping("/institutions")
     public Iterable<Institution> findAllInstitutions(Model model){
-        //        model.addAttribute("institutions", institutions);
         return institutionRepository.findAll();
     }
     @RequestMapping(value = "/institutions/save", method = RequestMethod.POST)
@@ -41,13 +40,11 @@ public class TestController {
     }
     @GetMapping("/users")
     public Iterable<UserTable> findAllUsers(Model model){
-        //        model.addAttribute("institutions", institutions);
         return userTableRepository.findAll();
     }
 
     @GetMapping("/roles")
     public Iterable<Role> findAllRoles(Model model){
-        //        model.addAttribute("institutions", institutions);
         return roleRepository.findAll();
     }
     @RequestMapping(value = "/users/save", method = RequestMethod.POST)
@@ -59,15 +56,4 @@ public class TestController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-//    @RequestMapping(value = "/roles/save", method = RequestMethod.POST)
-//    public ResponseEntity<Role> saveRole(@RequestBody Role role) {
-//        roleRepository.save(role);
-//        try {
-//            Role savedRole = roleRepository.save(role);
-//            return new ResponseEntity<>(savedRole, HttpStatus.CREATED);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
 }

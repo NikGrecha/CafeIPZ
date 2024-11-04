@@ -17,6 +17,11 @@ public class UserTableService implements UserTableRepository {
     }
 
     @Override
+    public Optional<UserTable> findByEmail(String email) {
+        return userTableRepository.findByEmail(email);
+    }
+
+    @Override
     public <S extends UserTable> S save(S entity) {
         return userTableRepository.save(entity);
     }
