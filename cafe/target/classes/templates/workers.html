@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>all-workers</title>
+</head>
+<body>
+<h1>Список всех заказов</h1>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+<div th:if="${users != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>first_name</th>
+            <th>last_name</th>
+            <th>phone</th>
+            <th>role_id</th>
+            <th>ChangeRole</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Цикл по каждому заказу из модели -->
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.firstName}"></td>
+            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.phone}"></td>
+            <td th:text="${user.role.id}"></td>
+            <td>
+                <form action="/api/v1/apps/update/role" method="post">
+                    <input type="hidden" name="id" th:value="${user.id}">
+                    <input type="number" id="roleId" name="roleId" placeholder="Новое значение" required>
+                    <button type="submit">Обновить</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -38,7 +38,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/register", "/registered", "/login", "api/v1/apps/welcome", "api/v1/apps/new-user").permitAll()
+                        .requestMatchers("/register", "/registered", "/login", "api/v1/apps/welcome", "api/v1/apps/new-user").permitAll()
                         .requestMatchers("api/v1/apps/new-order", "api/v1/apps/all-orders").hasAnyRole("WAITER", "CLIENT")
                         .requestMatchers("api/v1/apps/update-status").hasRole("WAITER")
                         .requestMatchers("api/v1/apps/new-reserve").hasAnyRole("CLIENT", "WAITER")
@@ -46,12 +46,12 @@ public class SecurityConfig {
                         .requestMatchers("api/v1/apps/user-orders/**", "api/v1/apps/desks/**", "api/v1/apps/desk/**").hasAnyRole("WAITER", "CLIENT")
                         .requestMatchers("api/v1/apps/ingredients/**").hasAnyRole("COOK")
                         .requestMatchers("api/v1/apps/dishes/view", "api/v1/apps/user-orders/**", "api/v1/apps/institutions"
-                                , "api/v1/apps/reviews/add", "api/v1/apps/add/**", "api/v1/apps/desksByInstitution/**").hasAnyRole("CLIENT", "WAITER", "COOK")
+                                , "api/v1/apps/reviews/add", "api/v1/apps/add/**", "api/v1/apps/desksByInstitution/**").hasAnyRole("CLIENT", "WAITER", "COOK", "OWNER")
                         .requestMatchers("api/v1/apps/dishes/save").hasRole("COOK")
                         .requestMatchers("api/v1/apps/dishes/addFavorite/**").hasRole("CLIENT")
                         .requestMatchers("api/v1/apps/menu/**").hasAnyRole("WAITER", "CLIENT")
                         .requestMatchers("api/v1/apps/storages/view").hasAnyRole("OWNER", "COOK")
-                        .requestMatchers("api/v1/apps/storages/save").hasAnyRole("OWNER")
+                        .requestMatchers("api/v1/apps/storages/save", "api/v1/apps/all-workers", "api/v1/apps/update/role").hasAnyRole("OWNER")
                         .requestMatchers("api/v1/apps/getId").authenticated())
                 .formLogin(login -> login
                         .loginPage("/login")

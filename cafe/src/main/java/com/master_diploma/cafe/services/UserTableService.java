@@ -5,6 +5,7 @@ import com.master_diploma.cafe.repositories.UserTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +20,16 @@ public class UserTableService implements UserTableRepository {
     @Override
     public Optional<UserTable> findByEmail(String email) {
         return userTableRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<UserTable> findAllWorkers(Long roleId) {
+        return userTableRepository.findAllWorkers(roleId);
+    }
+
+    @Override
+    public void updateRoleUser(Long roleId, Long id) {
+        userTableRepository.updateRoleUser(roleId, id);
     }
 
     @Override

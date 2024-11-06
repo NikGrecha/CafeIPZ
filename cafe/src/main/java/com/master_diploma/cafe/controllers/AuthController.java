@@ -13,15 +13,15 @@ public class AuthController {
     private final UserService userService;
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-//        model.addAttribute("user", new UserRegistrationDto());
+        model.addAttribute("user", new UserRegistrationDto());
         return "register";
     }
     @PostMapping("/registered")
     public String registerUser(@ModelAttribute UserRegistrationDto registrationDto, Model model) {
-//        if (userService.userExists(registrationDto.getEmail())) {
-//            model.addAttribute("error", "Пользователь с таким email уже существует");
-//            return "register";
-//        }
+        if (userService.userExists(registrationDto.getEmail())) {
+            model.addAttribute("error", "Пользователь с таким email уже существует");
+            return "register";
+        }
         userService.registerNewUser(registrationDto);
         return "redirect:/login";
     }
