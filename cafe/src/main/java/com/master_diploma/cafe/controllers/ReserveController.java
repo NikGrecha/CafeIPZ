@@ -27,7 +27,7 @@ public class ReserveController {
 
     @PostMapping("/new-reserve")
     public String saveReserve(@ModelAttribute Reserve reserve){
-        reserveRepository.save(reserve);
-        return "redirect:/api/v1/apps/menu/" + reserve.getDesk().getId();
+        reserve = reserveRepository.save(reserve);
+        return "redirect:/api/v1/apps/menu/" + reserve.getDesk().getId() + "?reserveId=" + reserve.getId();
     }
 }

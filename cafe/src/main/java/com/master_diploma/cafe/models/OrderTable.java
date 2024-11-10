@@ -38,9 +38,9 @@ public class OrderTable {
     @JsonManagedReference
     private UserTable user;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "desk_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "reserve_id", referencedColumnName = "id", nullable = false)
     @JsonManagedReference
-    private Desk desk;
+    private Reserve reserve;
     @OneToMany(mappedBy = "order")
     @JsonManagedReference
     private List<DishOrder> dishOrders;

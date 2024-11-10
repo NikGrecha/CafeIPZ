@@ -26,8 +26,6 @@ public class Desk {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "institution_id", referencedColumnName = "id", nullable = false)
     private Institution institution;
-    @OneToMany(mappedBy = "desk")
-    private Set<OrderTable> orders;
 
     @PrePersist
     void preInsert() {

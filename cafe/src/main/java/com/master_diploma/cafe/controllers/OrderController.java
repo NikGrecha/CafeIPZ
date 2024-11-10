@@ -1,10 +1,7 @@
 package com.master_diploma.cafe.controllers;
 
 import com.master_diploma.cafe.models.*;
-import com.master_diploma.cafe.repositories.DishFavoriteDishDTORepository;
-import com.master_diploma.cafe.repositories.DishOrderRepository;
-import com.master_diploma.cafe.repositories.DishRepository;
-import com.master_diploma.cafe.repositories.InstitutionRepository;
+import com.master_diploma.cafe.repositories.*;
 import com.master_diploma.cafe.services.DeskService;
 import com.master_diploma.cafe.services.MyUserDetailsService;
 import com.master_diploma.cafe.services.OrderTableService;
@@ -42,6 +39,10 @@ public class OrderController {
     @Autowired
     private DishFavoriteDishDTORepository dishFavoriteDishDTORepository;
     @Autowired
+    private ReserveRepository reserveRepository;
+    @Autowired
+    private HistoryDishOrderRepository historyDishOrderRepository;
+    @Autowired
     private MyUserDetailsService myUserDetailsService;
 
     @GetMapping("/all-orders")
@@ -52,6 +53,12 @@ public class OrderController {
         model.addAttribute("orders", orderTableService.findAll());
         return "all-orders";
     }
+    @GetMapping("/user-orders/{id}")
+    public String userPanelPage(Model model, @PathVariable Long id){
+        myUserDetailsService.getCurrentUserId();
+        model.addAttribute("orders", orderTableService.findByUserId(id));
+        return "user-orders";
+    }
     @GetMapping("/menu/{deskId}")
     public String menuView(Model model, @PathVariable long deskId){
         Desk desk = deskService.findById(deskId).get();
@@ -60,31 +67,23 @@ public class OrderController {
         model.addAttribute("dishes", dishFavoriteDishDTORepository.findByInstitutionId(institutionId, myUserDetailsService.getCurrentUserId()));
         model.addAttribute("currentUserId", myUserDetailsService.getCurrentUserId());
         model.addAttribute("currentUserRole", myUserDetailsService.getCurrentUserRole());
+        model.addAttribute("reserveId");
         model.addAttribute("deskId", deskId);
         if(myUserDetailsService.getCurrentUserRole().equals("ROLE_WAITER")){
             model.addAttribute("users", userTableService.findAll());
         }
         return "menu";
     }
-    @GetMapping("/user-orders/{id}")
-    public String userPanelPage(Model model, @PathVariable Long id){
-        myUserDetailsService.getCurrentUserId();
-        model.addAttribute("orders", orderTableService.findByUserId(id));
-        return "user-orders";
-    }
+    //TODO
     @PostMapping("/new-order")
-    public String save(@ModelAttribute OrderTable orderTable){
+    public String save(@ModelAttribute DishOrderDTO dishOrderDTO){
 
-        correctOrderTableObject(orderTable);
+        saveOrder(dishOrderDTO);
 
-        List<DishOrder> dishOrders = orderTable.getDishOrders();
-        orderTable.setDishOrders(null);
-        orderTableService.save(orderTable);
-
-        dishOrders.forEach(el -> el.setOrder(orderTable));
-
-        long institutionId = orderTable.getDesk().getInstitution().getId();
-        dishOrderRepository.saveAll(dishOrders);
+        long institutionId = 0;
+        Optional<Desk> desk = deskService.findById(dishOrderDTO.getDeskId());
+        if(desk.isPresent())
+            institutionId = desk.get().getInstitution().getId();
 
         if(myUserDetailsService.getCurrentUserRole().equals("ROLE_CLIENT"))
             return "redirect:/api/v1/apps/user-orders/" + myUserDetailsService.getCurrentUserId();
@@ -98,22 +97,59 @@ public class OrderController {
         return "redirect:/api/v1/apps/all-orders";
     }
 
-    private void correctOrderTableObject(OrderTable orderTable){
+    // Procedure for save orderTable, dishOrders and HistoryDishOrders
+    private void saveOrder(DishOrderDTO dishOrderDTO){
+        // If there is no reserve yet, creating Reserve object
+        Reserve reserve;
 
-        // Removing DishOrders with countDish = 0
-        orderTable.setDishOrders(orderTable.getDishOrders().stream()
-                .filter(obj -> obj.getCountDish() > 0).toList());
+        if(dishOrderDTO.getReserveId() == 0){
+            reserve = new Reserve();
+            reserve.setDateOfCreation(LocalDateTime.now());
+            deskService.findById(dishOrderDTO.getDeskId())
+                    .ifPresent(reserve::setDesk);
+            userTableService.findById(dishOrderDTO.getUserClientId())
+                    .ifPresent(reserve::setUser);
 
+            reserve = reserveRepository.save(reserve);
+        } else{
+            reserve = reserveRepository.findById(dishOrderDTO.getReserveId()).get();
+        }
+
+        double totalPrice = 0;
+
+        // Creating dishOrders and historyDishOrders
+        List<DishOrder> dishOrders = new ArrayList<>();
+        List<HistoryDishOrder> historyDishOrders = new ArrayList<>();
+        for (int i = 0; i < dishOrderDTO.getCountDish().length; i++) {
+            if(dishOrderDTO.getCountDish()[i] > 0){
+                // count totalPrice for OrderTable
+                totalPrice += dishOrderDTO.getCountDish()[i] * dishRepository.findById(dishOrderDTO.getDishId()[i]).get().getPrice();
+
+                for(int j = 0; j < dishOrderDTO.getCountDish()[i]; j++){
+                    DishOrder dishOrder = new DishOrder();
+                    dishRepository.findById(dishOrderDTO.getDishId()[i]).ifPresent(dishOrder::setDish);
+                    dishOrder.setUserWorker(userTableService.findAnyCook());
+
+                    dishOrders.add(dishOrder);
+                    historyDishOrders.add(new HistoryDishOrder(0, null, LocalDateTime.now(), dishOrder));
+                }
+            }
+        }
+
+        OrderTable orderTable = new OrderTable();
+        orderTable.setWishes(dishOrderDTO.getWishes());
         orderTable.setDateOfCreation(LocalDateTime.now());
+        orderTable.setPrice(totalPrice);
+        orderTable.setReserve(reserve);
+        userTableService.findById(dishOrderDTO.getUserClientId())
+                .ifPresent(orderTable::setUser);
 
-        orderTable.getDishOrders().forEach(dishOrder -> {
-            Dish fullDish = dishRepository.findById(dishOrder.getDish().getId()).get();
-            dishOrder.setDish(fullDish);
-        });
+        orderTable = orderTableService.save(orderTable);
 
-        // Calculating total order price
-        orderTable.setPrice(orderTable.getDishOrders().stream()
-                .mapToDouble(dishOrder -> dishOrder.getDish().getPrice() * dishOrder.getCountDish())
-                .sum());
+        OrderTable finalOrderTable = orderTable;
+        dishOrders.forEach(el -> el.setOrder(finalOrderTable));
+
+        dishOrderRepository.saveAll(dishOrders);
+        historyDishOrderRepository.saveAll(historyDishOrders);
     }
 }

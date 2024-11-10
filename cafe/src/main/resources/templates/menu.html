@@ -90,31 +90,29 @@
                     <td th:text="${dish.descriptions}"></td>
                     <td th:text="${dish.price}"></td>
                     <td th:text="${dish.institutionId}"></td>
-                    <td><input type="number" th:name="'dishOrders[' + ${stat.index} + '].countDish'" id="countDish" required value="0"></td>
+                    <td><input type="number" name="countDish" id="countDish" required value="0"></td>
                     <td th:if="${currentUserRole} == 'ROLE_CLIENT' and (${dish.userClientId} ==  null or ${dish.userClientId} != ${currentUserId})">
                         <button type="button" th:id="'btn' + ${stat.index}" th:attr="onclick=|addFavorite('${deskId}', '${dish.id}', '${currentUserId}', '${stat.index}')|" >Додати до улюблених</button>
                     </td>
-
-                        <input type="hidden" th:name="'dishOrders[' + ${stat.index} + '].dish.id'" id="dish" th:value="${dish.id}">
-                    <input th:if="${users}" type="hidden" th:name="'dishOrders[' + ${stat.index} + '].userWorker.id'" id="userWorkerId" th:value="${currentUserId}">
-<!--                    FIX! HARDCODED VALUE-->
-                    <input th:unless="${users}" type="hidden" th:name="'dishOrders[' + ${stat.index} + '].userWorker.id'" id="userWorkerIdHardcoded" value="10">
+                        <input type="hidden" th:name="dishId" id="dish" th:value="${dish.id}">
+                    <input th:if="${users}" type="hidden" name="userWorkerId" id="userWorkerId" th:value="${currentUserId}">
                 </tr>
             </tbody>
         </table>
         <div th:if="${currentUserRole} == 'ROLE_WAITER'">
             <label for="user">Виберіть користувача, якому створюєте замовлення:</label>
-            <select id="user" name="user">
+            <select id="user" name="userClientId">
                 <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.id} + ' ' + ${user.firstName} + '' + ${user.lastName}"></option>
             </select>
         </div>
         <div th:unless="${currentUserRole} == 'ROLE_WAITER'">
-            <input type="hidden" name="user" id="clientId" th:value="${currentUserId}">
+            <input type="hidden" name="userClientId" id="userClientId" th:value="${currentUserId}">
         </div>
 
         <label for="wishes">Побажання до замовлення:</label>
         <input type="text" id="wishes" name="wishes">
-        <input type="hidden" id="desk" name="desk" th:value="${deskId}">
+        <input type="hidden" id="deskId" name="deskId" th:value="${deskId}">
+        <input type="hidden" id="reserveId" name="reserveId" th:value="${param.reserveId}" th:if="${param.reserveId}">
         <input type="submit" value="Створити замовлення">
     </form>
 

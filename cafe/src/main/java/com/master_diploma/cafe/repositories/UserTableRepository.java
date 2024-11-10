@@ -22,6 +22,10 @@ public interface UserTableRepository extends CrudRepository<UserTable, Long> {
     List<UserTable> findAllWorkers(Long roleId);
 
     @Transactional
+    @Query(value = "SELECT * FROM user_table WHERE role_id = 2 ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
+    UserTable findAnyCook();
+
+    @Transactional
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE user_table SET role_id = :newRoleId WHERE id = :id", nativeQuery = true)
     void updateRoleUser(@Param("newRoleId") Long roleId, @Param("id") Long id);

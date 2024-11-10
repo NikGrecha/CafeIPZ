@@ -28,6 +28,11 @@ public class UserTableService implements UserTableRepository {
     }
 
     @Override
+    public UserTable findAnyCook() {
+        return userTableRepository.findAnyCook();
+    }
+
+    @Override
     public void updateRoleUser(Long roleId, Long id) {
         userTableRepository.updateRoleUser(roleId, id);
     }
