@@ -41,13 +41,13 @@ public class DishController {
         return "redirect:/api/v1/apps/dishes/view";
     }
 
-    @PostMapping("/addFavorite/{deskId}/{dishId}/{userId}")
-    public String saveFavoriteDish(@PathVariable Long deskId, @PathVariable Long dishId, @PathVariable Long userId){
+    @PostMapping("/addFavorite/{institutionId}/{dishId}/{userId}")
+    public String saveFavoriteDish(@PathVariable Long institutionId, @PathVariable Long dishId, @PathVariable Long userId){
         FavoriteDish favoriteDish = new FavoriteDish();
         dishRepository.findById(dishId).ifPresent(favoriteDish::setDish);
         userTableRepository.findById(userId).ifPresent(favoriteDish::setUser);
 
         favoriteDishRepository.save(favoriteDish);
-        return "redirect:/api/v1/apps/menu/" + deskId;
+        return "redirect:/api/v1/apps/menu/" + institutionId;
     }
 }

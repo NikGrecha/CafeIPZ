@@ -11,6 +11,7 @@
         border-collapse: collapse;
     }
 </style>
+<a th:href="'/api/v1/apps/user-orders/' + ${currentUser}">Мої замовлення</a>
 <div th:if="${institutions != null}">
     <table>
         <thead>
@@ -23,6 +24,7 @@
             <th>time_close</th>
             <th>goToReserve</th>
             <th>goToReview</th>
+            <th>Menu</th>
         </tr>
         </thead>
         <tbody>
@@ -39,6 +41,9 @@
             </td>
             <td>
                 <a th:href="'/api/v1/apps/add/' + ${institution.id}">Переглянути відгуки</a>
+            </td>
+            <td>
+                <a th:href="'/api/v1/apps/menu/' + ${institution.id}">Меню</a>
             </td>
         </tr>
         </tbody>

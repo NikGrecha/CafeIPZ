@@ -1,23 +1,21 @@
 package com.master_diploma.cafe.controllers;
 
+import com.master_diploma.cafe.dto.DishOrderDTO;
 import com.master_diploma.cafe.models.*;
 import com.master_diploma.cafe.repositories.*;
 import com.master_diploma.cafe.services.DeskService;
 import com.master_diploma.cafe.services.MyUserDetailsService;
 import com.master_diploma.cafe.services.OrderTableService;
 import com.master_diploma.cafe.services.UserTableService;
-import com.master_diploma.cafe.views.DishFavoriteDishView;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("api/v1/apps")
@@ -44,7 +42,6 @@ public class OrderController {
     private HistoryDishOrderRepository historyDishOrderRepository;
     @Autowired
     private MyUserDetailsService myUserDetailsService;
-
     @GetMapping("/all-orders")
     public String findAll(Model model, UserTable userTable){
         model.addAttribute("currentUser", myUserDetailsService.getCurrentUserId());
@@ -55,26 +52,20 @@ public class OrderController {
     }
     @GetMapping("/user-orders/{id}")
     public String userPanelPage(Model model, @PathVariable Long id){
-        myUserDetailsService.getCurrentUserId();
+        model.addAttribute("currentUser", myUserDetailsService.getCurrentUserId());
         model.addAttribute("orders", orderTableService.findByUserId(id));
         return "user-orders";
     }
-    @GetMapping("/menu/{deskId}")
-    public String menuView(Model model, @PathVariable long deskId){
-        Desk desk = deskService.findById(deskId).get();
-        long institutionId = institutionRepository.findById(desk.getInstitution().getId()).get().getId();
-
+    @GetMapping("/menu/{institutionId}")
+    public String menuView(Model model, @PathVariable long institutionId){
         model.addAttribute("dishes", dishFavoriteDishDTORepository.findByInstitutionId(institutionId, myUserDetailsService.getCurrentUserId()));
         model.addAttribute("currentUserId", myUserDetailsService.getCurrentUserId());
         model.addAttribute("currentUserRole", myUserDetailsService.getCurrentUserRole());
-        model.addAttribute("reserveId");
-        model.addAttribute("deskId", deskId);
         if(myUserDetailsService.getCurrentUserRole().equals("ROLE_WAITER")){
             model.addAttribute("users", userTableService.findAll());
         }
         return "menu";
     }
-    //TODO
     @PostMapping("/new-order")
     public String save(@ModelAttribute DishOrderDTO dishOrderDTO){
 
@@ -104,9 +95,13 @@ public class OrderController {
 
         if(dishOrderDTO.getReserveId() == 0){
             reserve = new Reserve();
-            reserve.setDateOfCreation(LocalDateTime.now());
-            deskService.findById(dishOrderDTO.getDeskId())
-                    .ifPresent(reserve::setDesk);
+            reserve.setDateOfReserve(LocalDateTime.now());
+            if(dishOrderDTO.getDeskId() == 0){
+
+            } else {
+                deskService.findById(dishOrderDTO.getDeskId())
+                        .ifPresent(reserve::setDesk);
+            }
             userTableService.findById(dishOrderDTO.getUserClientId())
                     .ifPresent(reserve::setUser);
 

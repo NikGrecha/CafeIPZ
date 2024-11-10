@@ -14,7 +14,6 @@ import java.util.Set;
 public interface DishRepository extends CrudRepository<Dish, Long> {
 
     Set<Dish> findByInstitutionId(long institutionId);
-
     //TODO
 //    @Transactional
 //    @Query(value = "SELECT * FROM dish WHERE institution_id == :institutionId", nativeQuery = true)

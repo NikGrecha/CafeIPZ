@@ -1,5 +1,7 @@
 package com.master_diploma.cafe.services;
 
+import com.master_diploma.cafe.dto.DeskReserveDto;
+import com.master_diploma.cafe.dto.DeskReserveProjection;
 import com.master_diploma.cafe.models.Desk;
 import com.master_diploma.cafe.repositories.DeskRepository;
 import lombok.AllArgsConstructor;
@@ -21,7 +23,6 @@ public class DeskService implements DeskRepository {
     public <S extends Desk> S save(S entity) {
         return deskRepository.save(entity);
     }
-
     @Override
     public <S extends Desk> Iterable<S> saveAll(Iterable<S> entities) {
         return deskRepository.saveAll(entities);
@@ -80,5 +81,10 @@ public class DeskService implements DeskRepository {
     @Override
     public List<Desk> findByInstitutionId(Long id) {
         return deskRepository.findByInstitutionId(id);
+    }
+
+    @Override
+    public List<DeskReserveProjection> findDeskReserveByInstitutionId(Long institutionId) {
+        return deskRepository.findDeskReserveByInstitutionId(institutionId);
     }
 }

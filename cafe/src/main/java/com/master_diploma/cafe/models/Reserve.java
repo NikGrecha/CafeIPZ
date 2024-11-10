@@ -21,9 +21,9 @@ public class Reserve {
     @SequenceGenerator(name="reserve_generator", sequenceName = "reserve_id_seq", allocationSize=1)
     @Column(name = "id")
     private long id;
-    @Column(name = "date_of_creation")
+    @Column(name = "date_of_reserve")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime dateOfCreation;
+    private LocalDateTime dateOfReserve;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "desk_id", referencedColumnName = "id", nullable = false)

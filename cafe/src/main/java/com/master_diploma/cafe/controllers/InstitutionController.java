@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class InstitutionController {
     @Autowired
     private InstitutionRepository institutionRepository;
+    @Autowired
+    private MyUserDetailsService myUserDetailsService;
 
     @GetMapping("/institutions")
     public String allInstitutions(Model model){
+        model.addAttribute("currentUser", myUserDetailsService.getCurrentUserId());
         model.addAttribute("institutions", institutionRepository.findAll());
         return "institutions";
     }

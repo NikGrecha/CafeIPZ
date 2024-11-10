@@ -1,5 +1,6 @@
 package com.master_diploma.cafe.controllers;
 
+import com.master_diploma.cafe.dto.DeskReserveDto;
 import com.master_diploma.cafe.models.Desk;
 import com.master_diploma.cafe.repositories.DeskRepository;
 import com.master_diploma.cafe.repositories.InstitutionRepository;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("api/v1/apps")
@@ -26,7 +29,15 @@ public class DeskController {
     private MyUserDetailsService myUserDetailsService;
     @GetMapping("/desks/{institutionId}")
     public String allDesks(@PathVariable long institutionId, Model model){
-        model.addAttribute("desks", deskRepository.findByInstitutionId(institutionId));
+        List<DeskReserveDto> result = deskRepository.findDeskReserveByInstitutionId(institutionId).stream()
+                .map(projection -> new DeskReserveDto(
+                        projection.getId(),
+                        projection.getNumberOfSeats(),
+                        projection.getStatus(),
+                        projection.getInstitutionId(),
+                        projection.getDateOfReserve()))
+                .toList();
+        model.addAttribute("desks", result);
         model.addAttribute("institutionId", institutionId);
         model.addAttribute("currentUserRole", myUserDetailsService.getCurrentUserRole());
         return "desks";

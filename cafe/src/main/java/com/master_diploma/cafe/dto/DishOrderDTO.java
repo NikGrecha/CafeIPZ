@@ -1,4 +1,4 @@
-package com.master_diploma.cafe.models;
+package com.master_diploma.cafe.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

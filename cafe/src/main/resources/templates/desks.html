@@ -26,17 +26,21 @@
     <table>
         <thead>
         <tr>
-            <th>ID</th>
+            <th>deskId</th>
+            <th>institutionId</th>
             <th>number_of_seats</th>
             <th>status</th>
+            <th>dateOfReserve</th>
             <th>reserve</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="desk : ${desks}">
             <td th:text="${desk.id}"></td>
+            <td th:text="${desk.institutionId}"></td>
             <td th:text="${desk.numberOfSeats}"></td>
             <td th:text="${desk.status}"></td>
+            <td th:text="${desk.dateOfReserve}"></td>
             <td>
                 <a th:href="'/api/v1/apps/desk/' + ${desk.id}">Перейти</a>
             </td>
