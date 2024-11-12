@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -59,8 +60,10 @@ public class OrderController {
     @GetMapping("/menu/{institutionId}")
     public String menuView(Model model, @PathVariable long institutionId){
         model.addAttribute("dishes", dishFavoriteDishDTORepository.findByInstitutionId(institutionId, myUserDetailsService.getCurrentUserId()));
+        model.addAttribute("dishOfTheDay", dishRepository.findDishOfTheDay(institutionId, LocalDate.now()));
         model.addAttribute("currentUserId", myUserDetailsService.getCurrentUserId());
         model.addAttribute("currentUserRole", myUserDetailsService.getCurrentUserRole());
+        model.addAttribute("institutionId", institutionId);
         if(myUserDetailsService.getCurrentUserRole().equals("ROLE_WAITER")){
             model.addAttribute("users", userTableService.findAll());
         }
@@ -71,15 +74,10 @@ public class OrderController {
 
         saveOrder(dishOrderDTO);
 
-        long institutionId = 0;
-        Optional<Desk> desk = deskService.findById(dishOrderDTO.getDeskId());
-        if(desk.isPresent())
-            institutionId = desk.get().getInstitution().getId();
-
         if(myUserDetailsService.getCurrentUserRole().equals("ROLE_CLIENT"))
             return "redirect:/api/v1/apps/user-orders/" + myUserDetailsService.getCurrentUserId();
         else
-            return "redirect:/api/v1/apps/desks/" + institutionId;
+            return "redirect:/api/v1/apps/desks/" + dishOrderDTO.getInstitutionId();
     }
 
     @PostMapping("/update-status")
@@ -96,14 +94,8 @@ public class OrderController {
         if(dishOrderDTO.getReserveId() == 0){
             reserve = new Reserve();
             reserve.setDateOfReserve(LocalDateTime.now());
-            if(dishOrderDTO.getDeskId() == 0){
-
-            } else {
-                deskService.findById(dishOrderDTO.getDeskId())
-                        .ifPresent(reserve::setDesk);
-            }
-            userTableService.findById(dishOrderDTO.getUserClientId())
-                    .ifPresent(reserve::setUser);
+            reserve.setDesk(deskService.findRandomByInstitutionId(dishOrderDTO.getInstitutionId()));
+            userTableService.findById(dishOrderDTO.getUserClientId()).ifPresent(reserve::setUser);
 
             reserve = reserveRepository.save(reserve);
         } else{

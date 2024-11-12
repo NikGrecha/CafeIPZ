@@ -16,6 +16,10 @@ import java.util.List;
 @Repository
 public interface DeskRepository extends CrudRepository<Desk, Long> {
     List<Desk> findByInstitutionId(Long id);
+
+    @Query(value = "SELECT * FROM desk WHERE institution_id = :institutionId ORDER BY RANDOM() LIMIT 1;", nativeQuery = true)
+    Desk findRandomByInstitutionId(long institutionId);
+
     @Query(value = "select desk.id, number_of_seats, status, institution_id, date_of_reserve from desk\n" +
             "left join reserve on desk.id=reserve.desk_id where institution_id = :id", nativeQuery = true)
     List<DeskReserveProjection> findDeskReserveByInstitutionId(@Param("id") Long institutionId);

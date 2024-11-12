@@ -84,6 +84,11 @@ public class DeskService implements DeskRepository {
     }
 
     @Override
+    public Desk findRandomByInstitutionId(long institutionId) {
+        return deskRepository.findRandomByInstitutionId(institutionId);
+    }
+
+    @Override
     public List<DeskReserveProjection> findDeskReserveByInstitutionId(Long institutionId) {
         return deskRepository.findDeskReserveByInstitutionId(institutionId);
     }

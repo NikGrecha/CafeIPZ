@@ -69,6 +69,31 @@
         }
     </script>
 
+    <div th:if="${dishOfTheDay != null}">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Recipe</th>
+                <th>Price</th>
+                <th>Institution id</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${dishOfTheDay.id}"></td>
+                <td th:text="${dishOfTheDay.title}"></td>
+                <td th:text="${dishOfTheDay.descriptions}"></td>
+                <td th:text="${dishOfTheDay.recipe}"></td>
+                <td th:text="${dishOfTheDay.price}"></td>
+                <td th:text="${dishOfTheDay.institution.id}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <br><br>
+    </div>
 
     <form action="/api/v1/apps/new-order" method="post">
         <table>
@@ -111,7 +136,7 @@
 
         <label for="wishes">Побажання до замовлення:</label>
         <input type="text" id="wishes" name="wishes">
-        <input type="hidden" id="deskId" name="deskId" th:value="${deskId}">
+        <input type="hidden" id="institutionId" name="institutionId" th:value="${institutionId}">
         <input type="hidden" id="reserveId" name="reserveId" th:value="${param.reserveId}" th:if="${param.reserveId}">
         <input type="submit" value="Створити замовлення">
     </form>

@@ -4,6 +4,7 @@ import com.master_diploma.cafe.models.Desk;
 import com.master_diploma.cafe.models.Reserve;
 import com.master_diploma.cafe.repositories.DeskRepository;
 import com.master_diploma.cafe.repositories.ReserveRepository;
+import com.master_diploma.cafe.services.DeskService;
 import com.master_diploma.cafe.services.MyUserDetailsService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -23,11 +24,15 @@ public class ReserveController {
     @Autowired
     private ReserveRepository reserveRepository;
     @Autowired
+    private DeskService deskService;
+    @Autowired
     private MyUserDetailsService myUserDetailsService;
 
     @PostMapping("/new-reserve")
     public String saveReserve(@ModelAttribute Reserve reserve){
         reserve = reserveRepository.save(reserve);
-        return "redirect:/api/v1/apps/menu/" + reserve.getDesk().getId() + "?reserveId=" + reserve.getId();
+        long institutionId = deskService.findById(reserve.getDesk().getId()).get().getInstitution().getId();
+        return "redirect:/api/v1/apps/menu/" + institutionId + "?reserveId=" + reserve.getId();
     }
+
 }

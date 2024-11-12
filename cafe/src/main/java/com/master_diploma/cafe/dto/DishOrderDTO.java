@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DishOrderDTO {
-    private long deskId;
+    private long institutionId;
     private long[] dishId;
     private int[] countDish;
     private long[] userWorkerId;
