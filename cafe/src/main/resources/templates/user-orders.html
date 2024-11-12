@@ -3,31 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>user-order</title>
+    <link rel="stylesheet" th:href="@{/css/user-orders.css}" type="text/css" >
 </head>
 <body>
-<style>
-    table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-</style>
-<div th:if="${orders != null}">
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>status</th>
-            <th>wishes</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="order : ${orders}">
-            <td th:text="${order.id}"></td>
-            <td th:text="${order.status}"></td>
-            <td th:text="${order.wishes}"></td>
-        </tr>
-        </tbody>
-    </table>
+<h2>Мои заказы</h2>
+
+<div class="orders-container" th:if="${orders != null}">
+    <div class="orders-grid">
+        <!-- Карточка для каждого заказа -->
+        <div class="order-card" th:each="order : ${orders}">
+            <h3>Заказ №<span th:text="${order.id}"></span></h3>
+            <p><strong>Статус:</strong> <span th:text="${order.status}"></span></p>
+            <p><strong>Пожелания:</strong> <span th:text="${order.wishes}">Нет</span></p>
+        </div>
+    </div>
 </div>
 </body>
 </html>

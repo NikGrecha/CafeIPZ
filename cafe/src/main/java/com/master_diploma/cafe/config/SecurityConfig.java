@@ -38,7 +38,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/registered", "/login", "api/v1/apps/welcome", "api/v1/apps/new-user").permitAll()
+                        .requestMatchers("/register", "/registered", "/login", "api/v1/apps/welcome", "api/v1/apps/new-user",
+                                "/css/**", "/js/**").permitAll()
                         .requestMatchers("api/v1/apps/new-order", "api/v1/apps/all-orders").hasAnyRole("WAITER", "CLIENT")
                         .requestMatchers("api/v1/apps/update-status").hasRole("WAITER")
                         .requestMatchers("api/v1/apps/new-reserve").hasAnyRole("CLIENT", "WAITER")

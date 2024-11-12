@@ -1,36 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Регистрация</title>
+    <link rel="stylesheet" th:href="@{/css/register.css}" type="text/css" >
 </head>
 <body>
-<h2>Регистрация</h2>
-<form action="/registered" method="post">
-    <div>
-        <label>Имя:</label>
-        <input type="text" name="firstName" required />
+<div class="login-container">
+    <h2>Регистрация</h2>
+    <form action="/registered" method="post">
+        <div>
+            <label>Имя:</label>
+            <input type="text" name="firstName" required />
+        </div>
+        <div>
+            <label>Фамилия:</label>
+            <input type="text" name="lastName" required />
+        </div>
+        <div>
+            <label>Email:</label>
+            <input type="email" name="email" required />
+        </div>
+        <div>
+            <label>Телефон:</label>
+            <input type="text" name="phone" required />
+        </div>
+        <div>
+            <label>Пароль:</label>
+            <input type="password" name="password" required />
+        </div>
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+    <a href="/login">Уже зарегистрированы?</a>
+    <div th:if="${error}">
+        <p th:text="${error}" style="color:red;"></p>
     </div>
-    <div>
-        <label>Фамилия:</label>
-        <input type="text" name="lastName" required />
-    </div>
-    <div>
-        <label>Email:</label>
-        <input type="email" name="email" required />
-    </div>
-    <div>
-        <label>Телефон:</label>
-        <input type="text" name="phone" required />
-    </div>
-    <div>
-        <label>Пароль:</label>
-        <input type="password" name="password" required />
-    </div>
-    <button type="submit">Зарегистрироваться</button>
-</form>
-<a href="/login">Вже зареєстрований</a>
-<div th:if="${error}">
-    <p th:text="${error}" style="color:red;"></p>
 </div>
 </body>
 </html>
