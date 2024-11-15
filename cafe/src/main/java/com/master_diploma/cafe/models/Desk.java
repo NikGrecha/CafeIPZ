@@ -21,7 +21,7 @@ public class Desk {
     @Column(name = "number_of_seats")
     private int numberOfSeats;
     @Column(name = "status")
-    private String status;
+    private boolean status;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "institution_id", referencedColumnName = "id", nullable = false)
@@ -29,7 +29,6 @@ public class Desk {
 
     @PrePersist
     void preInsert() {
-        if (status == null)
-            status = "vacant";
+        status = true;
     }
 }

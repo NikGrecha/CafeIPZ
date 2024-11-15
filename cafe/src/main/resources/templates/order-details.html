@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>user-order</title>
+</head>
+<body>
+<h2>Мои заказы</h2>
+
+<div class="orders-container" th:if="${orders != null}">
+    <div class="orders-grid">
+        <!-- Карточка для каждого заказа -->
+        <div class="order-card">
+            <h3>Заказ №<span th:text="${order.id}"></span></h3>
+            <p><strong>Статус:</strong> <span th:text="${order.status}"></span></p>
+            <p><strong>Побажання:</strong> <span th:text="${order.wishes}">Нет</span></p>
+            <p><strong>На ціну:</strong> <span th:text="${order.price}">Нет</span></p>
+            <p><strong>Створено:</strong> <span th:text="${order.dateOfCreation}">Нет</span></p>
+            <p th:if="${order.closingDate}"><strong>Закрито:</strong> <span th:text="${order.closingDate}">Нет</span></p>
+            <a th:href="'/api/v1/apps/user-orders/' + ${order.user.id}">Повернутись до всіх замовлень</a>
+        </div>
+        <br><br>
+    </div>
+    <div>
+        <div th:if="${dishes != null}">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+<!--                    <th>Recipe</th>-->
+                    <th>Price</th>
+                    <th>Institution id</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Цикл по каждому заказу из модели -->
+                <tr th:each="dish : ${dishes}">
+                    <td th:text="${dish.id}"></td>
+                    <td th:text="${dish.title}"></td>
+                    <td th:text="${dish.descriptions}"></td>
+<!--                    <td th:text="${dish.recipe}"></td>-->
+                    <td th:text="${dish.price}"></td>
+                    <td><a href="'/api/v1/apps/institutions/' + ${dish.institution.id}" th:text="${dish.institution.id}"></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -3,10 +3,7 @@ package com.master_diploma.cafe.controllers;
 import com.master_diploma.cafe.dto.DishOrderDTO;
 import com.master_diploma.cafe.models.*;
 import com.master_diploma.cafe.repositories.*;
-import com.master_diploma.cafe.services.DeskService;
-import com.master_diploma.cafe.services.MyUserDetailsService;
-import com.master_diploma.cafe.services.OrderTableService;
-import com.master_diploma.cafe.services.UserTableService;
+import com.master_diploma.cafe.services.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +27,7 @@ public class OrderController {
     @Autowired
     private UserTableService userTableService;
     @Autowired
-    private InstitutionRepository institutionRepository;
-    @Autowired
-    private DishRepository dishRepository;
+    private DishService dishService;
     @Autowired
     private DishOrderRepository dishOrderRepository;
     @Autowired
@@ -51,16 +46,23 @@ public class OrderController {
         model.addAttribute("orders", orderTableService.findAll());
         return "all-orders";
     }
-    @GetMapping("/user-orders/{id}")
-    public String userPanelPage(Model model, @PathVariable Long id){
+    @GetMapping("/user-orders/{userId}")
+    public String userPanelPage(Model model, @PathVariable Long userId){
         model.addAttribute("currentUser", myUserDetailsService.getCurrentUserId());
-        model.addAttribute("orders", orderTableService.findByUserId(id));
+        model.addAttribute("orders", orderTableService.findByUserId(userId));
         return "user-orders";
+    }
+    @GetMapping("/order-details.html/{orderId}")
+    public String userOrderPage(@PathVariable long orderId, Model model){
+        model.addAttribute("order", orderTableService.findById(orderId));
+        model.addAttribute("dishes", dishService.findByOrderId(orderId));
+
+        return "order-details.html";
     }
     @GetMapping("/menu/{institutionId}")
     public String menuView(Model model, @PathVariable long institutionId){
         model.addAttribute("dishes", dishFavoriteDishDTORepository.findByInstitutionId(institutionId, myUserDetailsService.getCurrentUserId()));
-        model.addAttribute("dishOfTheDay", dishRepository.findDishOfTheDay(institutionId, LocalDate.now()));
+        model.addAttribute("dishOfTheDay", dishService.findDishOfTheDay(institutionId, LocalDate.now()));
         model.addAttribute("currentUserId", myUserDetailsService.getCurrentUserId());
         model.addAttribute("currentUserRole", myUserDetailsService.getCurrentUserRole());
         model.addAttribute("institutionId", institutionId);
@@ -110,11 +112,11 @@ public class OrderController {
         for (int i = 0; i < dishOrderDTO.getCountDish().length; i++) {
             if(dishOrderDTO.getCountDish()[i] > 0){
                 // count totalPrice for OrderTable
-                totalPrice += dishOrderDTO.getCountDish()[i] * dishRepository.findById(dishOrderDTO.getDishId()[i]).get().getPrice();
+                totalPrice += dishOrderDTO.getCountDish()[i] * dishService.findById(dishOrderDTO.getDishId()[i]).getPrice();
 
                 for(int j = 0; j < dishOrderDTO.getCountDish()[i]; j++){
                     DishOrder dishOrder = new DishOrder();
-                    dishRepository.findById(dishOrderDTO.getDishId()[i]).ifPresent(dishOrder::setDish);
+                    dishOrder.setDish(dishService.findById(dishOrderDTO.getDishId()[i]));
                     dishOrder.setUserWorker(userTableService.findAnyCook());
 
                     dishOrders.add(dishOrder);

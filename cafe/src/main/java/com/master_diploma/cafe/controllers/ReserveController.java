@@ -25,8 +25,6 @@ public class ReserveController {
     private ReserveRepository reserveRepository;
     @Autowired
     private DeskService deskService;
-    @Autowired
-    private MyUserDetailsService myUserDetailsService;
 
     @PostMapping("/new-reserve")
     public String saveReserve(@ModelAttribute Reserve reserve){

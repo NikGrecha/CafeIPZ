@@ -6,6 +6,7 @@ import com.master_diploma.cafe.repositories.DishRepository;
 import com.master_diploma.cafe.repositories.FavoriteDishRepository;
 import com.master_diploma.cafe.repositories.InstitutionRepository;
 import com.master_diploma.cafe.repositories.UserTableRepository;
+import com.master_diploma.cafe.services.DishService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class DishController {
 
     @Autowired
-    private DishRepository dishRepository;
+    private DishService dishService;
     @Autowired
     private UserTableRepository userTableRepository;
     @Autowired
@@ -30,21 +31,21 @@ public class DishController {
 
     @GetMapping("/view")
     public String findAllDishes(Model model){
-        model.addAttribute("dishes", dishRepository.findAll());
+        model.addAttribute("dishes", dishService.findAll());
         model.addAttribute("institutions", institutionRepository.findAll());
         return "all-dishes";
     }
 
     @PostMapping("/save")
     public String saveDish(@ModelAttribute Dish dish){
-        dishRepository.save(dish);
+        dishService.save(dish);
         return "redirect:/api/v1/apps/dishes/view";
     }
 
     @PostMapping("/addFavorite/{institutionId}/{dishId}/{userId}")
     public String saveFavoriteDish(@PathVariable Long institutionId, @PathVariable Long dishId, @PathVariable Long userId){
         FavoriteDish favoriteDish = new FavoriteDish();
-        dishRepository.findById(dishId).ifPresent(favoriteDish::setDish);
+        favoriteDish.setDish(dishService.findById(dishId));
         userTableRepository.findById(userId).ifPresent(favoriteDish::setUser);
 
         favoriteDishRepository.save(favoriteDish);

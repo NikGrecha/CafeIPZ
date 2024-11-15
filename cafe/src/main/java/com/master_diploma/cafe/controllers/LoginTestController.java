@@ -17,10 +17,7 @@ import java.util.List;
 public class LoginTestController {
     private InstitutionRepository institutionRepository;
     private UserService userService;
-    private DeskRepository deskRepository;
-    private OrderTableRepository orderTableRepository;
     private DishRepository dishRepository;
-    private MyUserDetailsService myUserDetailsService;
     @GetMapping("/all-institutions")
     public Iterable<Institution> allInstitutions() {
         return institutionRepository.findAll();
