@@ -10,11 +10,12 @@
 
 <div class="orders-container" th:if="${orders != null}">
     <div class="orders-grid">
-        <!-- Карточка для каждого заказа -->
         <div class="order-card" th:each="order : ${orders}">
             <h3>Заказ №<span th:text="${order.id}"></span></h3>
             <p><strong>Статус:</strong> <span th:text="${order.status}"></span></p>
-            <p><strong>Пожелания:</strong> <span th:text="${order.wishes}">Нет</span></p>
+            <p><strong>Побажання:</strong> <span th:text="${order.wishes}">Нет</span></p>
+            <p><strong>На ціну:</strong> <span th:text="${order.price}">Нет</span></p>
+            <a th:href="'/api/v1/apps/order-details/' + ${order.id}">Детальніше</a>
         </div>
     </div>
 </div>

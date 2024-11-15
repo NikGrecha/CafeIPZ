@@ -28,7 +28,7 @@ public class DishOrder {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
     private OrderTable order;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dish_id", referencedColumnName = "id", nullable = false)
     private Dish dish;
     @OneToMany(mappedBy = "dishOrder")

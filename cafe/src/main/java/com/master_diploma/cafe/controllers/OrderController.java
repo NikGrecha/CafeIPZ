@@ -27,8 +27,6 @@ public class OrderController {
     @Autowired
     private UserTableService userTableService;
     @Autowired
-    private DishService dishService;
-    @Autowired
     private DishOrderRepository dishOrderRepository;
     @Autowired
     private DishFavoriteDishDTORepository dishFavoriteDishDTORepository;
@@ -38,6 +36,8 @@ public class OrderController {
     private HistoryDishOrderRepository historyDishOrderRepository;
     @Autowired
     private MyUserDetailsService myUserDetailsService;
+    @Autowired
+    private DishRepository dishRepository;
     @GetMapping("/all-orders")
     public String findAll(Model model, UserTable userTable){
         model.addAttribute("currentUser", myUserDetailsService.getCurrentUserId());
@@ -46,23 +46,16 @@ public class OrderController {
         model.addAttribute("orders", orderTableService.findAll());
         return "all-orders";
     }
-    @GetMapping("/user-orders/{userId}")
-    public String userPanelPage(Model model, @PathVariable Long userId){
+    @GetMapping("/user-orders/{id}")
+    public String userPanelPage(Model model, @PathVariable Long id){
         model.addAttribute("currentUser", myUserDetailsService.getCurrentUserId());
-        model.addAttribute("orders", orderTableService.findByUserId(userId));
+        model.addAttribute("orders", orderTableService.findByUserId(id));
         return "user-orders";
-    }
-    @GetMapping("/order-details.html/{orderId}")
-    public String userOrderPage(@PathVariable long orderId, Model model){
-        model.addAttribute("order", orderTableService.findById(orderId));
-        model.addAttribute("dishes", dishService.findByOrderId(orderId));
-
-        return "order-details.html";
     }
     @GetMapping("/menu/{institutionId}")
     public String menuView(Model model, @PathVariable long institutionId){
         model.addAttribute("dishes", dishFavoriteDishDTORepository.findByInstitutionId(institutionId, myUserDetailsService.getCurrentUserId()));
-        model.addAttribute("dishOfTheDay", dishService.findDishOfTheDay(institutionId, LocalDate.now()));
+        model.addAttribute("dishOfTheDay", dishRepository.findDishOfTheDay(institutionId, LocalDate.now()));
         model.addAttribute("currentUserId", myUserDetailsService.getCurrentUserId());
         model.addAttribute("currentUserRole", myUserDetailsService.getCurrentUserRole());
         model.addAttribute("institutionId", institutionId);
@@ -87,7 +80,15 @@ public class OrderController {
         orderTableService.updateStatus(status, id);
         return "redirect:/api/v1/apps/all-orders";
     }
-
+    @GetMapping("/order-details/{orderId}")
+    public String orderDetailsPage(Model model, @PathVariable Long orderId) {
+        OrderTable order = orderTableService.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        List<DishOrder> dishes = dishOrderRepository.findByOrderId(orderId);
+        model.addAttribute("order", order);
+        model.addAttribute("dishes", dishes);
+        return "order-details";
+    }
     // Procedure for save orderTable, dishOrders and HistoryDishOrders
     private void saveOrder(DishOrderDTO dishOrderDTO){
         // If there is no reserve yet, creating Reserve object
@@ -112,11 +113,11 @@ public class OrderController {
         for (int i = 0; i < dishOrderDTO.getCountDish().length; i++) {
             if(dishOrderDTO.getCountDish()[i] > 0){
                 // count totalPrice for OrderTable
-                totalPrice += dishOrderDTO.getCountDish()[i] * dishService.findById(dishOrderDTO.getDishId()[i]).getPrice();
+                totalPrice += dishOrderDTO.getCountDish()[i] * dishRepository.findById(dishOrderDTO.getDishId()[i]).get().getPrice();
 
                 for(int j = 0; j < dishOrderDTO.getCountDish()[i]; j++){
                     DishOrder dishOrder = new DishOrder();
-                    dishOrder.setDish(dishService.findById(dishOrderDTO.getDishId()[i]));
+                    dishRepository.findById(dishOrderDTO.getDishId()[i]).ifPresent(dishOrder::setDish);
                     dishOrder.setUserWorker(userTableService.findAnyCook());
 
                     dishOrders.add(dishOrder);

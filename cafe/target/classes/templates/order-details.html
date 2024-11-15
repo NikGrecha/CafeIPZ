@@ -25,7 +25,7 @@
     <tr th:each="dishOrder : ${dishes}">
         <td th:text="${dishOrder.dish.title}">Название</td>
         <td th:text="${dishOrder.dish.price}">Цена</td>
-        <td th:text="${dishOrder.dish.descriptions}">Описание</td>
+        <td th:text="${dishOrder.dish.descriptions}">Категория</td>
     </tr>
     </tbody>
 </table>
