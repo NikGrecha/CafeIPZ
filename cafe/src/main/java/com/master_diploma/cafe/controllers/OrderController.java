@@ -38,6 +38,8 @@ public class OrderController {
     private MyUserDetailsService myUserDetailsService;
     @Autowired
     private DishRepository dishRepository;
+    @Autowired
+    private DishOfTheDayService dishOfTheDayService;
     @GetMapping("/all-orders")
     public String findAll(Model model, UserTable userTable){
         model.addAttribute("currentUser", myUserDetailsService.getCurrentUserId());
@@ -55,10 +57,11 @@ public class OrderController {
     @GetMapping("/menu/{institutionId}")
     public String menuView(Model model, @PathVariable long institutionId){
         model.addAttribute("dishes", dishFavoriteDishDTORepository.findByInstitutionId(institutionId, myUserDetailsService.getCurrentUserId()));
-        model.addAttribute("dishOfTheDay", dishRepository.findDishOfTheDay(institutionId, LocalDate.now()));
         model.addAttribute("currentUserId", myUserDetailsService.getCurrentUserId());
         model.addAttribute("currentUserRole", myUserDetailsService.getCurrentUserRole());
         model.addAttribute("institutionId", institutionId);
+        Dish dishOfTheDay = dishOfTheDayService.getDishOfTheDay();
+        model.addAttribute("dishOfTheDay", dishOfTheDay);
         if(myUserDetailsService.getCurrentUserRole().equals("ROLE_WAITER")){
             model.addAttribute("users", userTableService.findAll());
         }
@@ -66,9 +69,7 @@ public class OrderController {
     }
     @PostMapping("/new-order")
     public String save(@ModelAttribute DishOrderDTO dishOrderDTO){
-
         saveOrder(dishOrderDTO);
-
         if(myUserDetailsService.getCurrentUserRole().equals("ROLE_CLIENT"))
             return "redirect:/api/v1/apps/user-orders/" + myUserDetailsService.getCurrentUserId();
         else

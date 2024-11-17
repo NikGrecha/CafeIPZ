@@ -2,150 +2,84 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>all-orders</title>
+    <title>Меню</title>
+    <link rel="stylesheet" th:href="@{/css/menu.css}" type="text/css">
 </head>
 <body>
+<div class="menu-container">
+    <div th:if="${currentUserRole} == 'ROLE_COOK'" class="add-dish-form">
+        <h2>Создать новое блюдо</h2>
+        <form action="/api/v1/apps/dishes/save" method="post">
+            <label for="title">Название:</label>
+            <input type="text" id="title" name="title" required>
 
-<br><br>
-<div th:if="${currentUserRole} == 'ROLE_COOK'">
-    <h2>Створити нову страву</h2>
+            <label for="descriptions">Описание:</label>
+            <input type="text" id="descriptions" name="descriptions" required>
 
-    <form action="/api/v1/apps/dishes/save" method="post">
+            <label for="recipe">Рецепт:</label>
+            <input type="text" id="recipe" name="recipe">
 
-        <label for="title">Назва:</label>
-        <input type="text" id="title" name="title">
+            <label for="price">Цена:</label>
+            <input type="number" id="price" name="price" required>
 
-        <label for="descriptions">Опис:</label>
-        <input type="text" id="descriptions" name="descriptions" required>
-
-        <label for="recipe">Рецепт:</label>
-        <input type="text" id="recipe" name="recipe">
-
-        <label for="price">Ціна:</label>
-        <input type="number" id="price" name="price">
-
-        <!--    Випадаючий список закладів-->
-        <label for="institution">Заклад:</label>
-        <select id="institution" name="institution">
-            <option th:each="institution : ${institutions}" th:value="${institution.id}" th:text="${institution.name}"></option>
-        </select>
-
-        <button type="submit">Створити страву</button>
-    </form>
-    <br><br>
-</div>
-
-<h1>Список усіх страв</h1>
-<style>
-    table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-</style>
-<div th:if="${dishes != null}">
-
-<!--    Script for adding dish to favorites-->
-    <script>
-        function addFavorite(institutionId, dishId, userId, index) {
-            fetch(`/api/v1/apps/dishes/addFavorite/${institutionId}/${dishId}/${userId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ institutionId: institutionId, dishId: dishId, userId: userId })
-            })
-            .then(response => {
-                if (response.ok) {
-                    const element = document.getElementById('btn' + index);
-                    element.remove();
-                    alert('Dish added to favorites!');
-                } else {
-                    alert('Failed to add dish to favorites.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    </script>
-
-    <div th:if="${dishOfTheDay != null}">
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Recipe</th>
-                <th>Price</th>
-                <th>Institution id</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td th:text="${dishOfTheDay.id}"></td>
-                <td th:text="${dishOfTheDay.title}"></td>
-                <td th:text="${dishOfTheDay.descriptions}"></td>
-                <td th:text="${dishOfTheDay.recipe}"></td>
-                <td th:text="${dishOfTheDay.price}"></td>
-                <td th:text="${dishOfTheDay.institution.id}"></td>
-            </tr>
-            </tbody>
-        </table>
-        <br><br>
+            <label for="institution">Заведение:</label>
+            <select id="institution" name="institution">
+                <option th:each="institution : ${institutions}" th:value="${institution.id}" th:text="${institution.name}"></option>
+            </select>
+            <button type="submit">Создать</button>
+        </form>
     </div>
 
-    <form action="/api/v1/apps/new-order" method="post">
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Institution id</th>
-                <th>Count</th>
-                <th th:if="${currentUserRole} == 'ROLE_CLIENT'">Favorite</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr th:each="dish, stat : ${dishes}">
-                    <td th:text="${dish.id}"></td>
-                    <td th:text="${dish.title}"></td>
-                    <td th:text="${dish.descriptions}"></td>
-                    <td th:text="${dish.price}"></td>
-                    <td th:text="${dish.institutionId}"></td>
-                    <td><input type="number" name="countDish" id="countDish" required value="0"></td>
-                    <td th:if="${currentUserRole} == 'ROLE_CLIENT' and (${dish.userClientId} ==  null or ${dish.userClientId} != ${currentUserId})">
-                        <button type="button" th:id="'btn' + ${stat.index}" th:attr="onclick=|addFavorite('${institutionId}', '${dish.id}', '${currentUserId}', '${stat.index}')|" >Додати до улюблених</button>
-                    </td>
-                        <input type="hidden" th:name="dishId" id="dish" th:value="${dish.id}">
-                    <input th:if="${users}" type="hidden" name="userWorkerId" id="userWorkerId" th:value="${currentUserId}">
-                </tr>
-            </tbody>
-        </table>
-        <div th:if="${currentUserRole} == 'ROLE_WAITER'">
-            <label for="user">Виберіть користувача, якому створюєте замовлення:</label>
-            <select id="user" name="userClientId">
-                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.id} + ' ' + ${user.firstName} + '' + ${user.lastName}"></option>
+    <h2>Меню</h2>
+    <form action="/api/v1/apps/new-order" method="post" class="order-form">
+    <ul class="dish-list">
+        <li class="dish-item" th:each="dish, index : ${dishes}">
+            <div class="dish-details">
+                <input type="hidden" th:name="dishId" id="dish" th:value="${dish.id}">
+                <span class="dish-title" th:text="${dish.title}">Название</span>
+                <p class="dish-description" th:text="${dish.descriptions}">Описание</p>
+                <span class="dish-price">Цена: <span th:text="${dish.price}">0</span> грн</span>
+                <span class="dish-institution" th:text="'Заведение: ' + ${dish.institutionId}">Заведение</span>
+            </div>
+            <div class="dish-actions">
+                <input type="number" name="countDish" id="countDish" required value="0">
+                <button type="submit"
+                        th:if="${currentUserRole} == 'ROLE_CLIENT' and (${dish.userClientId} == null or ${dish.userClientId} != ${currentUserId})"
+                        th:attr="onclick=|addFavorite('${institutionId}', '${dish.id}', '${currentUserId}', '${index}')|">
+                    Добавить в избранное
+                </button>
+                <button type="button" th:unless="${dish.userClientId} == null or ${dish.userClientId} != ${currentUserId}">
+                    В избранном
+                </button>
+            </div>
+        </li>
+    </ul>
+    <h2>Создать заказ</h2>
+        <div class="order-form-group">
+            <label for="user" th:if="${currentUserRole} == 'ROLE_WAITER'">Выберите клиента:</label>
+            <select id="user" name="userClientId" th:if="${currentUserRole} == 'ROLE_WAITER'">
+                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.id} + ' ' + ${user.firstName} + ' ' + ${user.lastName}"></option>
             </select>
-        </div>
-        <div th:unless="${currentUserRole} == 'ROLE_WAITER'">
-            <input type="hidden" name="userClientId" id="userClientId" th:value="${currentUserId}">
+            <input type="hidden" name="userClientId" id="userClientId" th:unless="${currentUserRole} == 'ROLE_WAITER'" th:value="${currentUserId}">
         </div>
 
-        <label for="wishes">Побажання до замовлення:</label>
-        <input type="text" id="wishes" name="wishes">
+        <div class="order-form-group">
+            <label for="wishes">Пожелания:</label>
+            <input type="text" id="wishes" name="wishes">
+        </div>
+
         <input type="hidden" id="institutionId" name="institutionId" th:value="${institutionId}">
         <input type="hidden" id="reserveId" name="reserveId" th:value="${param.reserveId}" th:if="${param.reserveId}">
-        <input type="submit" value="Створити замовлення">
+
+        <button type="submit">Создать заказ</button>
     </form>
-
+    <h2>Блюдо дня</h2>
+    <div class="dish-of-day">
+        <h3 th:text="${dishOfTheDay.title}">Название</h3>
+        <p th:text="${dishOfTheDay.descriptions}">Описание</p>
+        <span th:text="'Цена: ' + ${dishOfTheDay.price} + ' грн'">Цена</span>
+        <span th:text="'Рецепт: ' + ${dishOfTheDay.recipe}">Рецепт</span>
+    </div>
 </div>
-
-<div th:if="${dishes == null || dishes.size() == 0}">
-    <p>Страви відсутні.</p>
-</div>
-
 </body>
 </html>

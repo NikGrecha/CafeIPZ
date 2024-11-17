@@ -5,9 +5,8 @@
     <title>all-desks</title>
 </head>
 <body>
-
-<h2>Створити стіл</h2>
 <div th:if="${currentUserRole == 'ROLE_WAITER'}">
+    <h2>Створити стіл</h2>
     <form action="/api/v1/apps/new-desk" method="post">
         <input type="number" id="numberOfSeats" name="numberOfSeats" required>
         <input type="hidden" id="institution.id" name="institution.id" th:value="${institutionId}">

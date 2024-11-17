@@ -1,0 +1,81 @@
+body {
+    background-color: #121212;
+    font-family: Arial, sans-serif;
+    color: #e0e0e0;
+}
+/* Контейнер для деталей заказа */
+.order-details-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
+}
+
+/* Заголовок */
+.order-details-container h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+/* Информация о заказе */
+.order-details-container p {
+    font-size: 1em;
+    margin-bottom: 10px;
+    color: #b0b0b0;
+}
+
+.order-details-container p strong {
+    color: #ffffff;
+}
+
+/* Заголовок для списка блюд */
+.order-details-container h3 {
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+/* Сетка для блюд */
+.dishes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+/* Карточка блюда */
+.dish-card {
+    background-color: #2c2c2c;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+    color: #e0e0e0;
+}
+
+.dish-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Название блюда */
+.dish-card h4 {
+    font-size: 1.2em;
+    margin-top: 0;
+    color: #ffffff;
+}
+
+/* Информация о блюде */
+.dish-card p {
+    font-size: 0.9em;
+    margin: 5px 0;
+    color: #b0b0b0;
+}
+
+.dish-card p strong {
+    color: #ffffff;
+    font-weight: bold;
+}

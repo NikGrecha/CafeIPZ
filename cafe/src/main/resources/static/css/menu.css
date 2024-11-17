@@ -1,0 +1,187 @@
+body {
+    background-color: #121212;
+    font-family: Arial, sans-serif;
+    color: #e0e0e0;
+}
+/* Основной контейнер меню */
+.menu-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+}
+
+/* Заголовки */
+.menu-container h2, .menu-container h3 {
+    color: #ffffff;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+/* Форма добавления блюда */
+.add-dish-form form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.add-dish-form label {
+    color: #b0b0b0;
+    font-size: 0.9em;
+}
+
+.add-dish-form input, .add-dish-form select, .add-dish-form button {
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    background-color: #333333;
+    color: #e0e0e0;
+}
+
+.add-dish-form button {
+    background-color: #6200ea;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-dish-form button:hover {
+    background-color: #3700b3;
+}
+
+/* Список блюд */
+.dish-list {
+    list-style: none;
+    padding: 0;
+}
+
+.dish-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #2c2c2c;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+}
+
+.dish-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Детали блюда */
+.dish-details {
+    flex: 1;
+}
+
+.dish-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.dish-description {
+    font-size: 0.9em;
+    color: #b0b0b0;
+    margin: 5px 0;
+}
+
+.dish-price, .dish-institution {
+    font-size: 0.9em;
+    color: #e0e0e0;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Действия с блюдами */
+.dish-actions input {
+    width: 70px;
+    margin-right: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    background-color: #333333;
+    color: #e0e0e0;
+}
+
+.dish-actions button {
+    padding: 8px 12px;
+    background-color: #6200ea;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dish-actions button:hover {
+    background-color: #3700b3;
+}
+
+/* Блюдо дня */
+.dish-of-day {
+    padding: 15px;
+    background-color: #2c2c2c;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-top: 30px;
+}
+
+.dish-of-day h3 {
+    color: #ffffff;
+    margin-top: 0;
+}
+
+.dish-of-day p, .dish-of-day span {
+    font-size: 0.9em;
+    color: #b0b0b0;
+    margin: 5px 0;
+}
+/* Форма создания заказа */
+.order-form {
+    margin-top: 30px;
+    background-color: #2c2c2c;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.order-form-group {
+    margin-bottom: 15px;
+}
+
+.order-form label {
+    color: #b0b0b0;
+    font-size: 0.9em;
+}
+
+.order-form input, .order-form select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    margin-top: 5px;
+    background-color: #333333;
+    color: #e0e0e0;
+}
+
+.order-form button {
+    background-color: #6200ea;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.order-form button:hover {
+    background-color: #3700b3;
+}

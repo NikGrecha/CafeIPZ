@@ -6,28 +6,20 @@
     <link rel="stylesheet" th:href="@{/css/order-details.css}" type="text/css">
 </head>
 <body>
-<h2>Детали заказа №<span th:text="${order.id}"></span></h2>
-
-<p><strong>Статус:</strong> <span th:text="${order.status}"></span></p>
-<p><strong>Побажання:</strong> <span th:text="${order.wishes}">Нет</span></p>
-<p><strong>На ціну:</strong> <span th:text="${order.price}">Нет</span></p>
-
-<h3>Список блюд</h3>
-<table>
-    <thead>
-    <tr>
-        <th>Название блюда</th>
-        <th>Цена</th>
-        <th>Категория</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="dishOrder : ${dishes}">
-        <td th:text="${dishOrder.dish.title}">Название</td>
-        <td th:text="${dishOrder.dish.price}">Цена</td>
-        <td th:text="${dishOrder.dish.descriptions}">Категория</td>
-    </tr>
-    </tbody>
-</table>
+<div class="order-details-container">
+    <h2>Детали заказа №<span th:text="${order.id}"></span></h2>
+    <p><strong>Статус:</strong> <span th:text="${order.status}"></span></p>
+    <p><strong>Пожелания:</strong> <span th:text="${order.wishes}">Нет</span></p>
+    <p><strong>Сумма:</strong> <span th:text="${order.price}">0</span> грн</p>
+    <h3>Список блюд</h3>
+    <div class="dishes-grid">
+        <!-- Карточка для каждого блюда -->
+        <div class="dish-card" th:each="dishOrder : ${dishes}">
+            <h4 th:text="${dishOrder.dish.title}">Название блюда</h4>
+            <p><strong>Цена:</strong> <span th:text="${dishOrder.dish.price}">Цена</span> грн</p>
+            <p><strong>Категория:</strong> <span th:text="${dishOrder.dish.descriptions}">Описание</span></p>
+        </div>
+    </div>
+</div>
 </body>
 </html>

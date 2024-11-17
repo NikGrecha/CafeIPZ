@@ -27,4 +27,6 @@ public interface DishRepository extends CrudRepository<Dish, Long> {
             JOIN dish d ON d.id=dio.dish_id
             WHERE ot.id = :orderId""", nativeQuery = true)
     List<Dish> findByOrderId(long orderId);
+    @Query(value = "SELECT * FROM dish ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
+    Dish findRandomDish();
 }

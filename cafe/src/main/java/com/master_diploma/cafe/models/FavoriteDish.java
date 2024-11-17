@@ -16,11 +16,6 @@ public class FavoriteDish {
     @SequenceGenerator(name="favorite_dish_generator", sequenceName = "favorite_dish_id_seq", allocationSize=1)
     @Column(name = "id")
     private long id;
-//    @Column(name = "user_client_id")
-//    private long userClientId;
-//    @Column(name = "dish_id")
-//    private long dishId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_client_id", referencedColumnName = "id", nullable = false)
     private UserTable user;
