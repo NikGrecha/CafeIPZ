@@ -6,11 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/institutions.css}" type="text/css" >
 </head>
 <body>
-    <div th:if="${currentUserRole} == 'ROLE_WAITER'">
-        <a th:href="'/api/v1/apps/unfinished/orders'" class="link-back">Все заказы</a>
-    </div>
-<a th:href="'/api/v1/apps/user-orders/' + ${currentUser}" class="link-back">Мои заказы</a>
-<a th:href="'/api/v1/apps/institution/' + ${currentUser}" class="link-back">Мій заклад</a>
+<a th:href="'/api/v1/apps/all-workers'" class="link-back">Мои работники</a>
 <div class="institutions-container" th:if="${institutions != null}">
     <h2>Все заведения</h2>
     <div class="institutions-grid">

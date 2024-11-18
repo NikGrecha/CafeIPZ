@@ -13,7 +13,6 @@
     <p><strong>Сумма:</strong> <span th:text="${order.price}">0</span> грн</p>
     <h3>Список блюд</h3>
     <div class="dishes-grid">
-        <!-- Карточка для каждого блюда -->
         <div class="dish-card" th:each="dishOrder : ${dishes}">
             <h4 th:text="${dishOrder.dish.title}">Название блюда</h4>
             <p><strong>Цена:</strong> <span th:text="${dishOrder.dish.price}">Цена</span> грн</p>

@@ -18,7 +18,7 @@ public interface UserTableRepository extends CrudRepository<UserTable, Long> {
     Optional<UserTable> findByEmail(String email);
 
     @Transactional
-    @Query(value = "SELECT * FROM user_table WHERE role_id != 3", nativeQuery = true)
+    @Query(value = "SELECT * FROM user_table WHERE role_id != 3 AND role_id != 4", nativeQuery = true)
     List<UserTable> findAllWorkers(Long roleId);
 
     @Transactional

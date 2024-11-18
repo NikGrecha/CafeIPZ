@@ -22,10 +22,9 @@
             <th>wishes</th>
             <th>date_of_creation</th>
             <th>closing_date</th>
-            <th>desk_id</th>
+            <th>reserve_id</th>
             <th>user_client_id</th>
             <th>price</th>
-            <th>update status</th>
         </tr>
         </thead>
         <tbody>
@@ -36,16 +35,9 @@
             <td th:text="${order.wishes}"></td>
             <td th:text="${order.dateOfCreation}"></td>
             <td th:text="${order.closingDate}"></td>
-            <td th:text="${order.desk.id}"></td>
+            <td th:text="${order.reserve.id}"></td>
             <td th:text="${order.user.id}"></td>
             <td th:text="${order.price}"></td>
-            <td>
-                <form action="/api/v1/apps/update-status" method="post">
-                    <input type="hidden" name="id" th:value="${order.id}">
-                    <input type="text" id="status" name="status" placeholder="Новое значение" required>
-                    <button type="submit">Обновить</button>
-                </form>
-            </td>
         </tr>
         </tbody>
     </table>
@@ -54,7 +46,7 @@
 <div th:if="${orders == null || orders.size() == 0}">
     <p>Заказы отсутствуют.</p>
 </div>
-<h2>Замовлення тепер створюються через /menu/{institutionId}/{deskId}</h2>
-<a th:href="'/api/v1/apps/user-orders/' + ${currentUser}">Мої замовлення</a>
+<!--<h2>Замовлення тепер створюються через /menu/{institutionId}/{deskId}</h2>-->
+<!--<a th:href="'/api/v1/apps/user-orders/' + ${currentUser}">Мої замовлення</a>-->
 </body>
 </html>

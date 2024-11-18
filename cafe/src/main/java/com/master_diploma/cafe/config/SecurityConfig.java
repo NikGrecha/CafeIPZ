@@ -43,15 +43,16 @@ public class SecurityConfig {
                         .requestMatchers("api/v1/apps/new-order", "api/v1/apps/all-orders").hasAnyRole("WAITER", "CLIENT")
                         .requestMatchers("api/v1/apps/update-status").hasRole("WAITER")
                         .requestMatchers("api/v1/apps/new-reserve").hasAnyRole("CLIENT", "WAITER")
-                        .requestMatchers("api/v1/apps/new-desk").hasRole("WAITER")
+                        .requestMatchers("api/v1/apps/new-desk", "api/v1/apps/unfinished/orders").hasRole("WAITER")
                         .requestMatchers("api/v1/apps/user-orders/**", "api/v1/apps/desks/**", "api/v1/apps/desk/**").hasAnyRole("WAITER", "CLIENT")
                         .requestMatchers("api/v1/apps/ingredients/**").hasAnyRole("COOK")
                         .requestMatchers("api/v1/apps/dishes/view", "api/v1/apps/user-orders/**", "api/v1/apps/order-details/**", "api/v1/apps/institutions"
-                                , "api/v1/apps/reviews/add", "api/v1/apps/add/**", "api/v1/apps/desksByInstitution/**", "api/v1/apps/menu/**").hasAnyRole("CLIENT", "WAITER", "COOK", "OWNER")
+                                , "api/v1/apps/reviews/add", "api/v1/apps/add/**", "api/v1/apps/desksByInstitution/**", "api/v1/apps/menu/**"
+                        , "api/v1/apps/desks/**").hasAnyRole("CLIENT", "WAITER", "COOK", "OWNER")
                         .requestMatchers("api/v1/apps/dishes/save").hasRole("COOK")
                         .requestMatchers("api/v1/apps/dishes/addFavorite/**").hasRole("CLIENT")
                         .requestMatchers("api/v1/apps/storages/view").hasAnyRole("OWNER", "COOK")
-                        .requestMatchers("api/v1/apps/storages/save", "api/v1/apps/all-workers", "api/v1/apps/update/role").hasAnyRole("OWNER")
+                        .requestMatchers("api/v1/apps/storages/save", "api/v1/apps/all-workers", "api/v1/apps/update/role", "api/v1/apps/institution/**").hasAnyRole("OWNER")
                         .requestMatchers("api/v1/apps/getId").authenticated())
                 .formLogin(login -> login
                         .loginPage("/login")

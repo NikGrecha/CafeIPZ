@@ -26,7 +26,13 @@ public class InstitutionController {
     @GetMapping("/institutions")
     public String allInstitutions(Model model){
         model.addAttribute("currentUser", myUserDetailsService.getCurrentUserId());
+        model.addAttribute("currentUserRole", myUserDetailsService.getCurrentUserRole());
         model.addAttribute("institutions", institutionRepository.findAll());
         return "institutions";
+    }
+    @GetMapping("/institution/{ownerId}")
+    public String institutionByOwnerId(Model model, @PathVariable Long ownerId){
+        model.addAttribute("institutions", institutionRepository.findInstitutionByOwner(ownerId));
+        return "ownerInstitution";
     }
 }

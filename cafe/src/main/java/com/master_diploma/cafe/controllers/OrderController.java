@@ -40,18 +40,17 @@ public class OrderController {
     private DishRepository dishRepository;
     @Autowired
     private DishOfTheDayService dishOfTheDayService;
-    @GetMapping("/all-orders")
-    public String findAll(Model model, UserTable userTable){
-        model.addAttribute("currentUser", myUserDetailsService.getCurrentUserId());
-        model.addAttribute("desks", deskService.findAll());
-        model.addAttribute("users", userTableService.findAll());
-        model.addAttribute("orders", orderTableService.findAll());
-        return "all-orders";
-    }
+//    @GetMapping("/all-orders")
+//    public String findAll(Model model, UserTable userTable){
+//        model.addAttribute("currentUser", myUserDetailsService.getCurrentUserId());
+//        model.addAttribute("desks", deskService.findAll());
+//        model.addAttribute("users", userTableService.findAll());
+//        model.addAttribute("orders", orderTableService.findAll());
+//        return "all-orders";
+//    }
     @GetMapping("/user-orders/{id}")
     public String userPanelPage(Model model, @PathVariable Long id){
         model.addAttribute("currentUser", myUserDetailsService.getCurrentUserId());
-        model.addAttribute("orders", orderTableService.findByUserId(id));
         return "user-orders";
     }
     @GetMapping("/menu/{institutionId}")
@@ -89,6 +88,12 @@ public class OrderController {
         model.addAttribute("order", order);
         model.addAttribute("dishes", dishes);
         return "order-details";
+    }
+    @GetMapping("/unfinished/orders")
+    public String findUnfinishedOrders(Model model){
+        model.addAttribute("orders", orderTableService.findUnfinishedOrders());
+        model.addAttribute("desks", deskService.findAll());
+        return "all-orders";
     }
     // Procedure for save orderTable, dishOrders and HistoryDishOrders
     private void saveOrder(DishOrderDTO dishOrderDTO){
