@@ -13,4 +13,8 @@ public class InstitutionService{
     public Institution findById(Long id) {
         return institutionRepository.findById(id).orElseThrow(() -> new RuntimeException("Institution not found"));
     }
+
+    public Institution findByReserveId(Long orderId) {
+        return institutionRepository.findByReserveId(orderId).orElseThrow(() -> new RuntimeException("Institution not found"));
+    }
 }

@@ -2,8 +2,10 @@ package com.master_diploma.cafe.services;
 
 import com.master_diploma.cafe.dto.UserRegistrationDto;
 import com.master_diploma.cafe.models.Role;
+import com.master_diploma.cafe.models.UserInstitution;
 import com.master_diploma.cafe.models.UserTable;
 import com.master_diploma.cafe.repositories.RoleRepository;
+import com.master_diploma.cafe.repositories.UserInstitutionRepository;
 import com.master_diploma.cafe.repositories.UserTableRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -14,21 +16,23 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    private final UserTableRepository userTableRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final RoleRepository roleRepository;
     @Autowired
-    public UserService(UserTableRepository userTableRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
-        this.userTableRepository = userTableRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.roleRepository = roleRepository;
-    }
+    private InstitutionService institutionService;
+    @Autowired
+    private UserInstitutionRepository userInstitutionRepository;
+    @Autowired
+    private UserTableService userTableService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoleRepository roleRepository;
+
     public void addUser(UserTable userTable) {
         userTable.setPassword(passwordEncoder.encode(userTable.getPassword()));
-        userTableRepository.save(userTable);
+        userTableService.save(userTable);
     }
     public boolean userExists(String email) {
-        return userTableRepository.findByEmail(email).isPresent();
+        return userTableService.findByEmail(email) != null;
     }
     public void registerNewUser(UserRegistrationDto registrationDto) {
         UserTable newUser = new UserTable();
@@ -42,6 +46,11 @@ public class UserService {
         newUser.setRole(defaultRole);
         newUser.setRole(defaultRole);
 
-        userTableRepository.save(newUser);
+        userTableService.save(newUser);
+    }
+    public void registerNewWorker(UserTable user, Long institutionId){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userTableService.save(user);
+        userInstitutionRepository.save(new UserInstitution(0, userTableService.findById(user.getId()), institutionService.findById(institutionId)));
     }
 }

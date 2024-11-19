@@ -30,4 +30,8 @@ public class UserTableService{
     public Iterable<UserTable> findAll() {
         return userTableRepository.findAll();
     }
+
+    public UserTable findByEmail(String email) {
+        return userTableRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+    }
 }

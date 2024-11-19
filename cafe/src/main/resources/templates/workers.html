@@ -11,6 +11,43 @@
         border-collapse: collapse;
     }
 </style>
+
+<div>
+    <h2>Зареєструвати працівника</h2>
+    <form action="/api/v1/apps/sign-up-worker" method="post">
+        <div>
+            <label for="lastName">Прізвище:</label>
+            <input type="text" name="lastName" id="lastName" required />
+        </div>
+        <div>
+            <label for="firstName">Ім'я:</label>
+            <input type="text" name="firstName" id="firstName" required />
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required />
+        </div>
+        <div>
+            <label for="phone">Телефон:</label>
+            <input type="text" name="phone" id="phone" required />
+        </div>
+        <div>
+            <label for="password">Пароль:</label>
+            <input type="password" name="password" id="password" required />
+        </div>
+        <div th:if="${currentUserRole} == 'ROLE_ADMIN'">
+            <label for="roleId2">Роль:</label>
+            <select id="roleId2" name="role.id">
+                <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}" th:if="${role.id == 1 OR role.id == 2}"></option>
+            </select>
+        </div>
+        <input type="hidden" name="role.id" value=5 th:if="${currentUserRole} == 'ROLE_OWNER'">
+        <input type="hidden" name="institutionId" th:value="${institutionId}">
+        <button type="submit">Зареєструвати</button>
+    </form>
+</div>
+<br><br>
+
 <div th:if="${users != null}">
     <table>
         <thead>

@@ -27,6 +27,8 @@ public class OrderController {
     @Autowired
     private UserTableService userTableService;
     @Autowired
+    private InstitutionService institutionService;
+    @Autowired
     private DishOrderRepository dishOrderRepository;
     @Autowired
     private DishFavoriteDishDTORepository dishFavoriteDishDTORepository;
@@ -100,6 +102,8 @@ public class OrderController {
         List<DishOrder> dishes = dishOrderRepository.findByOrderId(orderId);
         model.addAttribute("order", order);
         model.addAttribute("dishes", dishes);
+        model.addAttribute("institution", institutionService.findByReserveId(order.getReserve().getId()));
+
         return "order-details";
     }
     @GetMapping("/unfinished/orders/{institutionId}")

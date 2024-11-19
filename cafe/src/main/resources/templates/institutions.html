@@ -12,7 +12,7 @@
 <div th:if="${currentUserRole} == 'ROLE_CLIENT'">
     <a th:href="'/api/v1/apps/user-orders/' + ${currentUser}" class="link-back">Мої замовлення</a>
 </div>
-<div th:if="${currentUserRole} == 'ROLE_OWNER'">
+<div th:if="${currentUserRole == 'ROLE_OWNER' OR currentUserRole == 'ROLE_ADMIN'}">
     <a th:href="'/api/v1/apps/institution/' + ${currentUser}" class="link-back">Мій заклад</a>
 </div>
 <div class="institutions-container" th:if="${institutions != null}">
