@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InstitutionService {
+public class InstitutionService{
     @Autowired
     private InstitutionRepository institutionRepository;
 
-    public Institution getInstitutionById(Long id) {
+    public Institution findById(Long id) {
         return institutionRepository.findById(id).orElseThrow(() -> new RuntimeException("Institution not found"));
     }
 }

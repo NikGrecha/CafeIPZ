@@ -1,0 +1,99 @@
+body {
+    background-color: #121212;
+    font-family: Arial, sans-serif;
+    color: #e0e0e0;
+}
+/* Контейнер для страницы заказов */
+.orders-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+}
+
+/* Навигационная ссылка */
+.navigation .link-back {
+    color: #bb86fc;
+    text-decoration: none;
+    font-size: 1em;
+    margin-bottom: 20px;
+    display: inline-block;
+    transition: color 0.3s;
+}
+
+.navigation .link-back:hover {
+    color: #ffffff;
+}
+
+/* Заголовок страницы */
+.orders-container h1 {
+    color: #ffffff;
+    font-weight: 300;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Сетка для заказов */
+.orders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Карточка заказа */
+.order-card {
+    background-color: #2c2c2c;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+    color: #e0e0e0;
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+}
+
+.order-card h2 {
+    font-size: 1.2em;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.order-card p {
+    font-size: 0.9em;
+    color: #b0b0b0;
+    margin: 5px 0;
+}
+
+.order-card p strong {
+    color: #ffffff;
+}
+
+/* Кнопка "Детальніше" */
+.details-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 15px;
+    background-color: #6200ea;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.details-button:hover {
+    background-color: #3700b3;
+}
+
+/* Сообщение, если заказов нет */
+.no-orders-message {
+    text-align: center;
+    font-size: 1.2em;
+    color: #b0b0b0;
+    margin-top: 20px;
+}

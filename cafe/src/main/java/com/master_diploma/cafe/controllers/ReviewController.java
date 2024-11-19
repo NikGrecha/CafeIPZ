@@ -33,7 +33,7 @@ public class ReviewController {
     @GetMapping("/add/{institutionId}")
     public String showReviewForm(@PathVariable("institutionId") Long institutionId, Model model) {
         model.addAttribute("user", myUserDetailsService.getCurrentUserId());
-        model.addAttribute("institution", institutionService.getInstitutionById(institutionId));
+        model.addAttribute("institution", institutionService.findById(institutionId));
         model.addAttribute("reviews", reviewService.findByInstitutionId(institutionId));
         return "add-review";
     }

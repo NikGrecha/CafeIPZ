@@ -2,21 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Детали заказа</title>
+    <title>Деталі замовлення</title>
     <link rel="stylesheet" th:href="@{/css/order-details.css}" type="text/css">
 </head>
 <body>
+<a th:href="'/api/v1/apps/user-orders/' + ${currentUser}" class="link-back">Мої замовлення</a>
 <div class="order-details-container">
-    <h2>Детали заказа №<span th:text="${order.id}"></span></h2>
+    <h2>Деталі замовлення №<span th:text="${order.id}"></span></h2>
     <p><strong>Статус:</strong> <span th:text="${order.status}"></span></p>
-    <p><strong>Пожелания:</strong> <span th:text="${order.wishes}">Нет</span></p>
-    <p><strong>Сумма:</strong> <span th:text="${order.price}">0</span> грн</p>
-    <h3>Список блюд</h3>
+    <p><strong>Побажання:</strong> <span th:text="${order.wishes}">Нет</span></p>
+    <p><strong>Ціна:</strong> <span th:text="${order.price}">0</span> грн</p>
+    <!-- Кнопка для отмены всего заказа -->
+    <form action="/api/v1/apps/order-details/cancelOrder" method="post" class="cancel-order-form">
+        <input type="hidden" name="orderId" th:value="${order.id}">
+        <button type="submit" class="cancel-button">Скасувати заказ</button>
+    </form>
+    <h3>Перелік страв</h3>
     <div class="dishes-grid">
         <div class="dish-card" th:each="dishOrder : ${dishes}">
-            <h4 th:text="${dishOrder.dish.title}">Название блюда</h4>
-            <p><strong>Цена:</strong> <span th:text="${dishOrder.dish.price}">Цена</span> грн</p>
-            <p><strong>Категория:</strong> <span th:text="${dishOrder.dish.descriptions}">Описание</span></p>
+            <h4 th:text="${dishOrder.id}"></h4>
+            <h4 th:text="${dishOrder.dish.title}">Назва страви</h4>
+            <p><strong>Ціна:</strong> <span th:text="${dishOrder.dish.price}">Ціна</span> грн</p>
+            <p><strong>Категорія:</strong> <span th:text="${dishOrder.dish.descriptions}">Опис</span></p>
+            <!-- Кнопка для отмены блюда -->
+            <form action="/api/v1/apps/order-details/cancelDish" method="post" class="cancel-dish-form">
+                <input type="hidden" name="dishOrder" th:value="${dishOrder.id}">
+                <button type="submit" class="cancel-button">Видалити блюдо</button>
+            </form>
+        </div>
+    </div>
+    <div class="dishes-grid">
+        <div th:if="${currentUserRole} == 'ROLE_WAITER'">
+            <br><br>
+            <form action="/api/v1/apps/order-details/closeOrder" method="post">
+                <input type="hidden" name="orderId" th:value="${order.id}">
+                <button type="submit" class="cancel-button">Закрити замовлення</button>
+            </form>
         </div>
     </div>
 </div>

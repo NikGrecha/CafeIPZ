@@ -16,15 +16,15 @@ public class UserInstitution {
     @SequenceGenerator(name="user_institution_generator", sequenceName = "user_institution_id_seq", allocationSize=1)
     @Column(name = "id")
     private long id;
-    @Column(name = "user_worker_id")
-    private long userWorkerId;
-    @Column(name = "institution_id")
-    private long institutionId;
+//    @Column(name = "user_worker_id")
+//    private long userWorkerId;
+//    @Column(name = "institution_id")
+//    private long institutionId;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_worker_id", referencedColumnName = "id", nullable = false)
-//    private UserTable user;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "institution_id", referencedColumnName = "id", nullable = false)
-//    private Institution institution;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_worker_id", referencedColumnName = "id", nullable = false)
+    private UserTable user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "institution_id", referencedColumnName = "id", nullable = false)
+    private Institution institution;
 }

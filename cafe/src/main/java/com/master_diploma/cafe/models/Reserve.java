@@ -22,7 +22,7 @@ public class Reserve {
     @Column(name = "id")
     private long id;
     @Column(name = "date_of_reserve")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dateOfReserve;
 
     @ManyToOne(fetch = FetchType.LAZY)

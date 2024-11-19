@@ -33,7 +33,8 @@
             <td th:text="${user.role.id}"></td>
             <td>
                 <form action="/api/v1/apps/update/role" method="post">
-                    <input type="hidden" name="id" th:value="${user.id}">
+                    <input type="hidden" name="workerId" th:value="${user.id}">
+                    <input type="hidden" name="institutionId" th:value="${institutionId}">
                     <input type="number" id="roleId" name="roleId" placeholder="Новое значение" required>
                     <button type="submit">Обновить</button>
                 </form>

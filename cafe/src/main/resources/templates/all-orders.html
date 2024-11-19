@@ -2,51 +2,39 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>all-orders</title>
+    <title>Список заказов</title>
+    <link rel="stylesheet" th:href="@{/css/all-orders.css}" type="text/css">
 </head>
 <body>
-<h1>Список всех заказов</h1>
-<style>
-    table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-</style>
-<!-- Проверка, есть ли заказы -->
-<div th:if="${orders != null}">
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>status</th>
-            <th>wishes</th>
-            <th>date_of_creation</th>
-            <th>closing_date</th>
-            <th>reserve_id</th>
-            <th>user_client_id</th>
-            <th>price</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Цикл по каждому заказу из модели -->
-        <tr th:each="order : ${orders}">
-            <td th:text="${order.id}"></td>
-            <td th:text="${order.status}"></td>
-            <td th:text="${order.wishes}"></td>
-            <td th:text="${order.dateOfCreation}"></td>
-            <td th:text="${order.closingDate}"></td>
-            <td th:text="${order.reserve.id}"></td>
-            <td th:text="${order.user.id}"></td>
-            <td th:text="${order.price}"></td>
-        </tr>
-        </tbody>
-    </table>
+<div class="orders-container">
+    <div class="navigation">
+        <a href="/api/v1/apps/institutions" class="link-back">Список закладів</a>
+    </div>
+
+    <h1>Список відкритих замовлень</h1>
+
+    <!-- Проверка, есть ли заказы -->
+    <div th:if="${orders != null && orders.size() > 0}">
+        <div class="orders-grid">
+            <!-- Карточка каждого заказа -->
+            <div class="order-card" th:each="order : ${orders}">
+                <h2>Замовлення №<span th:text="${order.id}"></span></h2>
+                <p><strong>Статус:</strong> <span th:text="${order.status}">Відкрито</span></p>
+                <p><strong>Побажання:</strong> <span th:text="${order.wishes}">Немає</span></p>
+                <p><strong>Дата створення:</strong> <span th:text="${#temporals.format(order.dateOfCreation, 'yyyy-MM-dd HH:mm')}"></span></p>
+                <p><strong>Дата закриття:</strong> <span th:text="${order.closingDate}">Невідомо</span></p>
+                <p><strong>Резерв ID:</strong> <span th:text="${order.reserve.id}">-</span></p>
+                <p><strong>Клієнт ID:</strong> <span th:text="${order.user.id}">-</span></p>
+                <p><strong>Ціна:</strong> <span th:text="${order.price}">0</span> грн</p>
+                <a th:href="'/api/v1/apps/order-details/' + ${order.id}" class="details-button">Детальніше</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Если заказов нет, отображаем сообщение -->
+    <div th:if="${orders == null || orders.size() == 0}">
+        <p class="no-orders-message">Замовлення відсутні.</p>
+    </div>
 </div>
-<!-- Если заказов нет, отображаем сообщение -->
-<div th:if="${orders == null || orders.size() == 0}">
-    <p>Заказы отсутствуют.</p>
-</div>
-<!--<h2>Замовлення тепер створюються через /menu/{institutionId}/{deskId}</h2>-->
-<!--<a th:href="'/api/v1/apps/user-orders/' + ${currentUser}">Мої замовлення</a>-->
 </body>
 </html>

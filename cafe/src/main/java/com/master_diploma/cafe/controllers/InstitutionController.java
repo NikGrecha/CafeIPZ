@@ -28,6 +28,9 @@ public class InstitutionController {
         model.addAttribute("currentUser", myUserDetailsService.getCurrentUserId());
         model.addAttribute("currentUserRole", myUserDetailsService.getCurrentUserRole());
         model.addAttribute("institutions", institutionRepository.findAll());
+        if(myUserDetailsService.getCurrentUserRole().equals("ROLE_WAITER") || myUserDetailsService.getCurrentUserRole().equals("ROLE_COOK")) {
+            model.addAttribute("institutionId", institutionRepository.findByWorkerId(myUserDetailsService.getCurrentUserId()).getId());
+        }
         return "institutions";
     }
     @GetMapping("/institution/{ownerId}")

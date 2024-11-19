@@ -79,3 +79,17 @@ body {
     color: #ffffff;
     font-weight: bold;
 }
+.cancel-button {
+    background-color: #d13237;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+}
+
+.cancel-button:hover {
+    background-color: #d32f2f;
+}

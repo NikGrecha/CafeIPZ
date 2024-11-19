@@ -20,6 +20,10 @@ public interface OrderTableRepository extends CrudRepository<OrderTable, Long> {
     @Query(value = "SELECT * FROM order_table WHERE user_client_id = :id", nativeQuery = true)
     List<OrderTable> findByUserId(@Param("id") Long id);
     @Transactional
-    @Query(value = "SELECT * FROM order_table WHERE status != 'finished'", nativeQuery = true)
-    List<OrderTable> findUnfinishedOrders();
+    @Query(value = """
+            SELECT ot.* FROM order_table ot
+            JOIN reserve r ON r.id=ot.reserve_id
+            JOIN desk d ON d.id=r.desk_id
+            WHERE ot.status NOT IN ('Canceled', 'Closed') AND institution_id = :institutionId""", nativeQuery = true)
+    List<OrderTable> findUnfinishedOrders(@Param("institutionId") Long institutionId);
 }

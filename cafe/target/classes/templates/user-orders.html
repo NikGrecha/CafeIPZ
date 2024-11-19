@@ -6,7 +6,9 @@
     <link rel="stylesheet" th:href="@{/css/user-orders.css}" type="text/css" >
 </head>
 <body>
-<h2>Мои заказы</h2>
+<a href="/api/v1/apps/institutions" class="link-back">Список закладів</a>
+
+<h2>Мої замовлення</h2>
 
 <div class="orders-container" th:if="${orders != null}">
     <div class="orders-grid">

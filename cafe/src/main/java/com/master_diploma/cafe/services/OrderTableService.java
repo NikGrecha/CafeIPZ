@@ -87,7 +87,7 @@ public class OrderTableService implements OrderTableRepository {
     }
 
     @Override
-    public List<OrderTable> findUnfinishedOrders() {
-        return orderTableRepository.findUnfinishedOrders();
+    public List<OrderTable> findUnfinishedOrders(Long institutionId) {
+        return orderTableRepository.findUnfinishedOrders(institutionId);
     }
 }

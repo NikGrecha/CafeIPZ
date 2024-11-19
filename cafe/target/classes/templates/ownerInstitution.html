@@ -6,7 +6,6 @@
     <link rel="stylesheet" th:href="@{/css/institutions.css}" type="text/css" >
 </head>
 <body>
-<a th:href="'/api/v1/apps/all-workers'" class="link-back">Мои работники</a>
 <div class="institutions-container" th:if="${institutions != null}">
     <h2>Все заведения</h2>
     <div class="institutions-grid">
@@ -20,8 +19,9 @@
             </div>
             <div class="institution-links">
                 <a th:href="'/api/v1/apps/desks/' + ${institution.id}">Перейти</a>
-                <a th:href="'/api/v1/apps/add/' + ${institution.id}">Отзывы</a>
+                <a th:href="'/api/v1/apps/add/' + ${institution.id}">Відгуки</a>
                 <a th:href="'/api/v1/apps/menu/' + ${institution.id}">Меню</a>
+                <a th:href="'/api/v1/apps/all-workers/' + ${institution.id}" class="link-back">Працівники закладу</a>
             </div>
         </div>
     </div>
