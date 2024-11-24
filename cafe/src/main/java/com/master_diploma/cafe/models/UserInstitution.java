@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,10 +18,6 @@ public class UserInstitution {
     @SequenceGenerator(name="user_institution_generator", sequenceName = "user_institution_id_seq", allocationSize=1)
     @Column(name = "id")
     private long id;
-//    @Column(name = "user_worker_id")
-//    private long userWorkerId;
-//    @Column(name = "institution_id")
-//    private long institutionId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_worker_id", referencedColumnName = "id", nullable = false)
@@ -27,4 +25,6 @@ public class UserInstitution {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "institution_id", referencedColumnName = "id", nullable = false)
     private Institution institution;
+    @OneToMany(mappedBy = "userInstitution")
+    private Set<WorkSchedule> workSchedules;
 }

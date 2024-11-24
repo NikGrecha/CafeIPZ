@@ -11,7 +11,9 @@
         border-collapse: collapse;
     }
 </style>
-
+<div>
+    <a th:href="'/api/v1/apps/work-schedule-management/' + ${institutionId}">Графіки роботи працівників</a>
+</div>
 <div>
     <h2>Зареєструвати працівника</h2>
     <form action="/api/v1/apps/sign-up-worker" method="post">
@@ -48,7 +50,7 @@
 </div>
 <br><br>
 
-<div th:if="${users != null}">
+<div th:if="${workers != null}">
     <table>
         <thead>
         <tr>
@@ -62,15 +64,15 @@
         </thead>
         <tbody>
         <!-- Цикл по каждому заказу из модели -->
-        <tr th:each="user : ${users}">
-            <td th:text="${user.id}"></td>
-            <td th:text="${user.firstName}"></td>
-            <td th:text="${user.lastName}"></td>
-            <td th:text="${user.phone}"></td>
-            <td th:text="${user.role.id}"></td>
+        <tr th:each="worker : ${workers}">
+            <td th:text="${worker.id}"></td>
+            <td th:text="${worker.firstName}"></td>
+            <td th:text="${worker.lastName}"></td>
+            <td th:text="${worker.phone}"></td>
+            <td th:text="${worker.role.id}"></td>
             <td>
                 <form action="/api/v1/apps/update/role" method="post">
-                    <input type="hidden" name="workerId" th:value="${user.id}">
+                    <input type="hidden" name="workerId" th:value="${worker.id}">
                     <input type="hidden" name="institutionId" th:value="${institutionId}">
                     <input type="number" id="roleId" name="roleId" placeholder="Новое значение" required>
                     <button type="submit">Обновить</button>

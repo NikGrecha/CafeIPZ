@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Перегляд змін співробітників</title>
+</head>
+<body>
+<div th:if="${workerInstitutionDTOs}">
+    <form action="/api/v1/apps/create-schedule" method="post">
+        <div>
+            <label for="dateTimeStart">Дата і час початку:</label>
+            <input type="datetime-local" name="dateTimeStart" id="dateTimeStart" required />
+        </div>
+        <div>
+            <label for="dateTimeEnd">Дата і час закінчення:</label>
+            <input type="datetime-local" name="dateTimeEnd" id="dateTimeEnd" required />
+        </div>
+<!--        <div>-->
+<!--            <label for="hoursOfWork">Час роботи:</label>-->
+<!--            <input type="time" name="hoursOfWork" id="hoursOfWork" required />-->
+<!--        </div>-->
+        <div>
+            <label for="userInstitution.id">Працівник:</label>
+            <select id="userInstitution.id" name="userInstitution.id">
+                <option th:each="el : ${workerInstitutionDTOs}" th:value="${el.userInstitutionId}" th:text="${el.firstName + ' ' + el.lastName}"></option>
+            </select>
+        </div>
+        <input type="hidden" name="institutionId" th:value="${institutionId}">
+        <button type="submit">Створити</button>
+    </form>
+    <br>
+</div>
+<div th:unless="${workerInstitutionDTOs}">
+    <h2>Не можливо створити графік роботи для працівника, бо список працівників пустий.</h2>
+    <br>
+</div>
+<div th:if="${workerScheduleDTOs}">
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+    <table>
+        <thead>
+            <tr>
+                <th>workScheduleId</th>
+                <th>workerId</th>
+                <th>userInstitutionId</th>
+                <th>workerFirstName</th>
+                <th>workerLastName</th>
+                <th>dateTimeStart</th>
+                <th>dateTimeEnd</th>
+                <th>hoursOfWork</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="el : ${workerScheduleDTOs}">
+                <td th:text="${el.workScheduleId}"></td>
+                <td th:text="${el.workerId}"></td>
+                <td th:text="${el.userInstitutionId}"></td>
+                <td th:text="${el.workerFirstName}"></td>
+                <td th:text="${el.workerLastName}"></td>
+                <td th:text="${el.dateTimeStart}"></td>
+                <td th:text="${el.dateTimeEnd}"></td>
+                <td th:text="${el.hoursOfWork}" th:if="${el.hoursOfWork.toString()} != '00:00'"></td>
+                <td th:unless="${el.hoursOfWork.toString() != '00:00'}">
+                    <form action="/api/v1/apps/set-hoursOfWork" method="post">
+                        <input type="hidden" name="workScheduleId" th:value="${el.workScheduleId}">
+                        <input type="hidden" name="institutionId" th:value="${institutionId}">
+                        <input type="time" name="hoursOfWork">
+                        <input type="submit" value="Зберегти час роботи співробітника">
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
