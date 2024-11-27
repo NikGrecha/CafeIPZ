@@ -1,0 +1,120 @@
+/* Основной фон и стили текста */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #121212;
+            font-family: Arial, sans-serif;
+            color: #e0e0e0;
+        }
+        /* Контейнер для отзывов */
+        .review-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            color: #e0e0e0;
+        }
+
+        /* Заголовки */
+        .review-container h1, .review-container h2 {
+            color: #ffffff;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        /* Форма для добавления отзыва */
+        .review-form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .review-form label {
+            color: #b0b0b0;
+            font-size: 0.9em;
+        }
+
+        .review-form input, .review-form textarea {
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
+            background-color: #333333;
+            color: #e0e0e0;
+            font-size: 1em;
+        }
+
+        .review-form textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        .review-form button {
+            padding: 10px 20px;
+            background-color: #6200ea;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .review-form button:hover {
+            background-color: #3700b3;
+        }
+
+        /* Сетка для отзывов */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* Карточка отзыва */
+        .review-card {
+            background-color: #2c2c2c;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: #e0e0e0;
+        }
+
+        .review-card h3 {
+            font-size: 1.2em;
+            color: #ffffff;
+        }
+
+        .review-card p {
+            font-size: 0.9em;
+            color: #b0b0b0;
+            margin: 5px 0;
+        }
+
+        .review-card p strong {
+            color: #ffffff;
+        }
+
+        /* Сообщение об отсутствии отзывов */
+        .no-reviews-message {
+            text-align: center;
+            font-size: 1.2em;
+            color: #b0b0b0;
+            margin-top: 20px;
+        }
+
+        /* Таблица для отзывов */
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            padding: 8px;
+        }
+        th {
+            background-color: #333333;
+        }

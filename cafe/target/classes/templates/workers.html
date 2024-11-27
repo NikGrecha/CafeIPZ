@@ -2,21 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>all-workers</title>
+    <title>Працівники</title>
+    <link rel="stylesheet" th:href="@{/css/workers.css}" type="text/css">
 </head>
 <body>
-<style>
-    table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-</style>
-<div>
-    <a th:href="'/api/v1/apps/work-schedule-management/' + ${institutionId}">Графіки роботи працівників</a>
-</div>
-<div>
+<div class="workers-container">
+    <!-- Ссылка на графики работы -->
+    <a th:href="'/api/v1/apps/work-schedule-management/' + ${institutionId}" class="action-button">Графіки роботи працівників</a>
+
     <h2>Зареєструвати працівника</h2>
-    <form action="/api/v1/apps/sign-up-worker" method="post">
+    <form action="/api/v1/apps/sign-up-worker" method="post" class="worker-form">
         <div>
             <label for="lastName">Прізвище:</label>
             <input type="text" name="lastName" id="lastName" required />
@@ -43,44 +38,46 @@
                 <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}" th:if="${role.id == 1 OR role.id == 2}"></option>
             </select>
         </div>
-        <input type="hidden" name="role.id" value=5 th:if="${currentUserRole} == 'ROLE_OWNER'">
-        <input type="hidden" name="institutionId" th:value="${institutionId}">
-        <button type="submit">Зареєструвати</button>
+        <input type="hidden" name="role.id" value="5" th:if="${currentUserRole} == 'ROLE_OWNER'" />
+        <input type="hidden" name="institutionId" th:value="${institutionId}" />
+        <button type="submit" class="action-button">Зареєструвати</button>
     </form>
-</div>
-<br><br>
 
-<div th:if="${workers != null}">
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>first_name</th>
-            <th>last_name</th>
-            <th>phone</th>
-            <th>role_id</th>
-            <th>ChangeRole</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Цикл по каждому заказу из модели -->
-        <tr th:each="worker : ${workers}">
-            <td th:text="${worker.id}"></td>
-            <td th:text="${worker.firstName}"></td>
-            <td th:text="${worker.lastName}"></td>
-            <td th:text="${worker.phone}"></td>
-            <td th:text="${worker.role.id}"></td>
-            <td>
-                <form action="/api/v1/apps/update/role" method="post">
-                    <input type="hidden" name="workerId" th:value="${worker.id}">
-                    <input type="hidden" name="institutionId" th:value="${institutionId}">
-                    <input type="number" id="roleId" name="roleId" placeholder="Новое значение" required>
-                    <button type="submit">Обновить</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <h2>Список працівників</h2>
+    <div th:if="${workers != null}">
+        <table class="workers-table">
+            <thead>
+            <tr>
+                <th>Ім'я</th>
+                <th>Прізвище</th>
+                <th>Телефон</th>
+                <th>Роль</th>
+                <th>Оновити роль</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="worker : ${workers}">
+                <td th:text="${worker.firstName}">Ім'я</td>
+                <td th:text="${worker.lastName}">Прізвище</td>
+                <td th:text="${worker.phone}">Телефон</td>
+                <td th:text="${worker.role.id}">Роль</td>
+                <td>
+                    <form action="/api/v1/apps/update/role" method="post" class="role-update-form">
+                        <input type="hidden" name="workerId" th:value="${worker.id}" />
+                        <input type="hidden" name="institutionId" th:value="${institutionId}" />
+                        <input type="number" id="roleId" name="roleId" placeholder="Новое значение" required />
+                        <button type="submit" class="action-button">Оновити</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Если работников нет -->
+    <div th:if="${workers == null || workers.size() == 0}" class="no-workers-message">
+        <p>Працівники відсутні.</p>
+    </div>
 </div>
 </body>
 </html>

@@ -1,0 +1,161 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #121212;
+    font-family: Arial, sans-serif;
+    color: #e0e0e0;
+}
+
+/* Основной контейнер */
+.workers-container {
+    max-width: 1000px; /* Установка максимальной ширины */
+    margin: 0 auto; /* Центрирование */
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Предотвращение выхода элементов за границы */
+}
+
+/* Заголовки */
+.workers-container h2, .workers-container h3 {
+    color: #ffffff;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+/* Ссылки и кнопки */
+.action-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #6200ea;
+    color: #ffffff;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-size: 1em;
+    margin-bottom: 20px;
+}
+
+.action-button:hover {
+    background-color: #3700b3;
+}
+
+/* Форма регистрации */
+.worker-form {
+    display: flex;
+    flex-direction: column; /* Вертикальное расположение полей */
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.worker-form label {
+    color: #b0b0b0;
+    font-size: 0.9em;
+}
+
+.worker-form input, .worker-form select {
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    background-color: #333333;
+    color: #e0e0e0;
+    font-size: 1em;
+    width: 100%; /* Растягиваем на всю ширину */
+    box-sizing: border-box; /* Учитываем padding */
+}
+
+/* Карточка работника */
+.worker-card {
+    background-color: #2c2c2c;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+    color: #e0e0e0;
+    width: 100%; /* Занимает всю доступную ширину */
+    box-sizing: border-box; /* Включаем padding в ширину */
+}
+
+.worker-card h3 {
+    font-size: 1.1em;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.worker-card p {
+    font-size: 0.9em;
+    color: #b0b0b0;
+    margin-bottom: 10px;
+}
+
+/* Сетка работников */
+.workers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Автоматическая адаптация */
+    gap: 20px;
+}
+
+/* Форма изменения роли */
+.role-update-form {
+    margin-top: 10px;
+}
+
+.role-update-form input {
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    background-color: #333333;
+    color: #e0e0e0;
+    margin-right: 10px;
+}
+
+.role-update-form button {
+    padding: 8px 15px;
+    background-color: #6200ea;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.role-update-form button:hover {
+    background-color: #3700b3;
+}
+
+/* Сообщение об отсутствии работников */
+.no-workers-message {
+    text-align: center;
+    font-size: 1.2em;
+    color: #b0b0b0;
+    margin-top: 20px;
+}
+
+/* Таблица работников */
+.workers-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.workers-table th, .workers-table td {
+    padding: 10px;
+    border: 1px solid #333333;
+    text-align: left;
+}
+
+.workers-table th {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.workers-table td {
+    background-color: #2c2c2c;
+}

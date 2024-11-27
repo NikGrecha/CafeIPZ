@@ -20,7 +20,11 @@ public interface DeskRepository extends CrudRepository<Desk, Long> {
     @Query(value = "SELECT * FROM desk WHERE institution_id = :institutionId ORDER BY RANDOM() LIMIT 1;", nativeQuery = true)
     Desk findRandomByInstitutionId(long institutionId);
 
-    @Query(value = "select desk.id, number_of_seats, status, institution_id, date_of_reserve from desk\n" +
-            "left join reserve on desk.id=reserve.desk_id where institution_id = :id", nativeQuery = true)
+    @Query(value = """
+            SELECT desk.id, number_of_seats, status, institution_id, MAX(date_of_reserve) as latest_reserve_date
+            FROM desk
+            LEFT JOIN reserve ON desk.id = reserve.desk_id
+            WHERE institution_id = :id
+            GROUP BY desk.id, number_of_seats, status, institution_id;""", nativeQuery = true)
     List<DeskReserveProjection> findDeskReserveByInstitutionId(@Param("id") Long institutionId);
 }

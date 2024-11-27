@@ -35,6 +35,7 @@ public class InstitutionController {
     }
     @GetMapping("/institution/{ownerId}")
     public String institutionByOwnerId(Model model, @PathVariable Long ownerId){
+        model.addAttribute("currentRole", myUserDetailsService.getCurrentUserRole());
         model.addAttribute("institutions", institutionRepository.findInstitutionByOwner(ownerId));
         return "ownerInstitution";
     }

@@ -45,7 +45,7 @@ public class SecurityConfig {
                         .requestMatchers("api/v1/apps/new-reserve", "api/v1/apps/order-details/cancelOrder",
                                 "api/v1/apps/order-details/cancelDish").hasAnyRole("CLIENT", "WAITER")
                         .requestMatchers("api/v1/apps/new-desk", "api/v1/apps/unfinished/orders/**").hasRole("WAITER")
-                        .requestMatchers("api/v1/apps/user-orders/**", "api/v1/apps/desks/**", "api/v1/apps/desk/**").hasAnyRole("WAITER", "CLIENT")
+                        .requestMatchers("api/v1/apps/user-orders/**", "api/v1/apps/desk/**").hasAnyRole("WAITER", "CLIENT")
                         .requestMatchers("api/v1/apps/ingredients/**").hasAnyRole("COOK")
                         .requestMatchers("api/v1/apps/dishes/view", "api/v1/apps/user-orders/**", "api/v1/apps/order-details/**", "api/v1/apps/institutions"
                                 , "api/v1/apps/reviews/add", "api/v1/apps/add/**", "api/v1/apps/desksByInstitution/**", "api/v1/apps/menu/**"

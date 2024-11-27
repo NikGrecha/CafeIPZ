@@ -79,15 +79,25 @@ body {
     color: #ffffff;
     font-weight: bold;
 }
-.cancel-button {
-    background-color: #d13237;
-    color: #ffffff;
+.action-button, .cancel-button {
+    display: inline-block;
     padding: 10px 20px;
-    border: none;
+    background-color: #6200ea;
+    color: #ffffff;
+    text-decoration: none;
+    text-align: center;
     border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9em;
+    margin-top: 15px;
     transition: background-color 0.3s;
+    font-size: 1em;
+}
+.action-button:hover, .cancel-button:hover {
+    background-color: #3700b3;
+}
+
+/* Дополнительный отступ между кнопками */
+.action-button + .action-button {
+    margin-left: 10px;
 }
 
 .cancel-button:hover {

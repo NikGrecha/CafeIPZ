@@ -1,0 +1,96 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Основний контейнер */
+.desks-container {
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
+}
+
+/* Кнопки */
+.action-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    color: #ffffff;
+    background-color: #6200ea;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 0.9em;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.action-button:hover {
+    background-color: #3700b3;
+    transform: translateY(-3px);
+}
+
+/* Форма створення столу */
+.create-desk-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #2c2c2c;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Заголовки */
+.create-desk h2,
+.desks-container h2 {
+    color: #ffffff;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Сітка столів */
+.desks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Карточка столу */
+.desk-card {
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
+    text-align: left;
+    transition: transform 0.3s;
+}
+
+.desk-card:hover {
+    transform: translateY(-5px);
+}
+
+.desk-card p {
+    margin: 10px 0;
+    font-size: 0.9em;
+    color: #b0b0b0;
+}
+
+.desk-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.2em;
+    color: #ffffff;
+}

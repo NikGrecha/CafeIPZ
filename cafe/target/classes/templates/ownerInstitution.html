@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="institutions-container" th:if="${institutions != null}">
-    <h2>Все заведения</h2>
+    <h2>Всі заклади</h2>
     <div class="institutions-grid">
         <!-- Цикл по каждому заведению -->
         <div class="institution-card" th:each="institution : ${institutions}">
@@ -18,7 +18,7 @@
                 <span>Часы работы: <span th:text="${institution.timeOpen}">10:00</span> - <span th:text="${institution.timeClose}">22:00</span></span>
             </div>
             <div class="institution-links">
-                <a th:href="'/api/v1/apps/desks/' + ${institution.id}">Перейти</a>
+                <a th:href="'/api/v1/apps/desks/' + ${institution.id}" th:if="${currentRole != 'ROLE_OWNER'}">Перейти</a>
                 <a th:href="'/api/v1/apps/add/' + ${institution.id}">Відгуки</a>
                 <a th:href="'/api/v1/apps/menu/' + ${institution.id}">Меню</a>
                 <a th:href="'/api/v1/apps/all-workers/' + ${institution.id}" class="link-back">Працівники закладу</a>

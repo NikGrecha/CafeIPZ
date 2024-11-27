@@ -6,17 +6,21 @@
     <link rel="stylesheet" th:href="@{/css/order-details.css}" type="text/css">
 </head>
 <body>
-<a th:href="'/api/v1/apps/user-orders/' + ${currentUser}" class="link-back">Мої замовлення</a>
 <div class="order-details-container">
+    <!-- Кнопка для перехода к списку заказов -->
+    <a th:href="'/api/v1/apps/user-orders/' + ${currentUser}" class="action-button">Мої замовлення</a>
+
     <h2>Деталі замовлення №<span th:text="${order.id}"></span></h2>
     <p><strong>Статус:</strong> <span th:text="${order.status}"></span></p>
     <p><strong>Побажання:</strong> <span th:text="${order.wishes}">Нет</span></p>
     <p><strong>Ціна:</strong> <span th:text="${order.price}">0</span> грн</p>
+
     <!-- Кнопка для отмены всего заказа -->
     <form action="/api/v1/apps/order-details/cancelOrder" method="post" class="cancel-order-form">
         <input type="hidden" name="orderId" th:value="${order.id}">
         <button type="submit" class="cancel-button">Скасувати заказ</button>
     </form>
+
     <h3>Перелік страв</h3>
     <div class="dishes-grid">
         <div class="dish-card" th:each="dishOrder : ${dishes}">
@@ -30,17 +34,18 @@
                 <button type="submit" class="cancel-button">Видалити блюдо</button>
             </form>
         </div>
-        <br>
-        <p><strong>Залишити відгук до закладу:</strong> <span><a th:href="'/api/v1/apps/add/' + ${institution.id}" th:text="${institution.title}"></a></span></p>
     </div>
-    <div class="dishes-grid">
-        <div th:if="${currentUserRole} == 'ROLE_WAITER'">
-            <br><br>
-            <form action="/api/v1/apps/order-details/closeOrder" method="post">
-                <input type="hidden" name="orderId" th:value="${order.id}">
-                <button type="submit" class="cancel-button">Закрити замовлення</button>
-            </form>
-        </div>
+
+    <!-- Кнопка для добавления отзыва -->
+    <p><strong>Залишити відгук до закладу:</strong></p>
+    <a th:href="'/api/v1/apps/add/' + ${institution.id}" class="action-button" th:text="'Відгук про ' + ${institution.title}">Залишити відгук</a>
+
+    <!-- Кнопка для закрытия заказа (для роли официанта) -->
+    <div th:if="${currentUserRole} == 'ROLE_WAITER'">
+        <form action="/api/v1/apps/order-details/closeOrder" method="post">
+            <input type="hidden" name="orderId" th:value="${order.id}">
+            <button type="submit" class="cancel-button">Закрити замовлення</button>
+        </form>
     </div>
 </div>
 </body>
